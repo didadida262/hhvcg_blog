@@ -2,6 +2,7 @@
 title: Webpack系列：第三回
 date: 2023-07-24 22:39:47
 tags:
+category: Webpack
 ---
 继前文简单介绍了下前端模块发展史，以此作为铺垫，本文将会简单梳理下webpack的基本打包思路。
 

@@ -1,6 +1,6 @@
 ---
 title: down视频资源时的偶然发现
-cate: 网络杂谈
+category: 网络杂谈
 date: 2023-08-03 10:28:44
 tags:
 ---
@@ -13,12 +13,12 @@ tags:
 
 **当我打开控制台懵逼了。**
 - 快捷键打开控制台：弹框“你知道的太多了”,直接无法打开...
-<img src="/img/你知道的太多了.jpg" alt="图片描述" width="500" height="300">
+<img src="/img/你知道的太多了.jpg" alt="图片描述" width="500">
 
 - 页面一直死循环debugger!!!。
-<img src="/img/debugger.png" alt="图片描述" width="500" height="300">
+<img src="/img/debugger.png" alt="图片描述" width="800">
 
-手段真骚。仔细看下代码：
+手段真骚。仔细看下代码（图片有点模糊）：
 
 ```javascript
 <script type="text/javascript">

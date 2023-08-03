@@ -2,6 +2,8 @@
 .cache
 node_modules/
 dist/
+db.json
+.deploy_git
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*

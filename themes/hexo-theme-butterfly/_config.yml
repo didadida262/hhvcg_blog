@@ -854,6 +854,7 @@ aplayerInject:
 snackbar:
   enable: false
   position: bottom-left
+  # bg_light: 'rgb(89,195,225)' # The background color of Toast Notification in light mode
   bg_light: '#49b1f5' # The background color of Toast Notification in light mode
   bg_dark: '#1f1f1f' # The background color of Toast Notification in dark mode
 

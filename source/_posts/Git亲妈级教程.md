@@ -1,8 +1,3 @@
-<!--
- * @Author: Hhvcg
- * @Date: 2023-08-03 11:20:52
- * @LastEditors: Hhvcg
--->
 ---
 title: Git亲妈级教程
 category: 大前端剑宗专栏

@@ -7,8 +7,7 @@ tags:
 本系列的目标：**尝试深入理解当前浏览器（谷歌）的大体逻辑。内容严重参考《Webkit技术内幕》**
 
 现代浏览器的渲染逻辑，就是下图的流程。
-![layoput](../../public/img/layout.webp)
-<img src="/img/layout.webp" alt="图片描述" width="500">
+<img src="/img/layout.jpeg" alt="图片描述" width="500">
 
 
 一个经典的面试题：从输入url到最终页面的呈现，这其中都经历了些啥？

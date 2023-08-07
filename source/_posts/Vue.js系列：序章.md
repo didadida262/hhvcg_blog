@@ -1,5 +1,5 @@
 ---
-title: 解剖vue：序章
+title: Vue.js系列：序章
 category: 大前端剑宗专栏
 date: 2023-08-07 22:30:17
 tags:

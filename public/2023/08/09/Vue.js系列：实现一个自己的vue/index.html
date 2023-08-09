@@ -1,0 +1,204 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Vue.js系列：实现一个自己的vue | 致敬仰望星空的人们</title><meta name="author" content="Hhvcg(旅途图)"><meta name="copyright" content="Hhvcg(旅途图)"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="本文开始，我们尝试着实现一个自个儿的vue框架（简陋版本）。  首先我们的页面结构如下：123456789101112131415161718192021222324252627&lt;!DOCTYPE html&gt;&lt;html lang&#x3D;&quot;en&quot;&gt;&lt;head&gt;    &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue.js系列：实现一个自己的vue">
+<meta property="og:url" content="http://example.com/2023/08/09/Vue.js%E7%B3%BB%E5%88%97%EF%BC%9A%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E8%87%AA%E5%B7%B1%E7%9A%84vue/index.html">
+<meta property="og:site_name" content="致敬仰望星空的人们">
+<meta property="og:description" content="本文开始，我们尝试着实现一个自个儿的vue框架（简陋版本）。  首先我们的页面结构如下：123456789101112131415161718192021222324252627&lt;!DOCTYPE html&gt;&lt;html lang&#x3D;&quot;en&quot;&gt;&lt;head&gt;    &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/img/f.jpg">
+<meta property="article:published_time" content="2023-08-09T01:54:37.000Z">
+<meta property="article:modified_time" content="2023-08-09T02:21:41.565Z">
+<meta property="article:author" content="Hhvcg(旅途图)">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/f.jpg"><link rel="shortcut icon" href="/img/avatar.jpg"><link rel="canonical" href="http://example.com/2023/08/09/Vue.js%E7%B3%BB%E5%88%97%EF%BC%9A%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E8%87%AA%E5%B7%B1%E7%9A%84vue/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Vue.js系列：实现一个自己的vue',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-08-09 10:21:41'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/f.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">29</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">8</div></a></div><hr class="custom-hr"/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="致敬仰望星空的人们"><span class="site-name">致敬仰望星空的人们</span></a></span><div id="menus"><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Vue.js系列：实现一个自己的vue</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2023-08-09T01:54:37.000Z" title="Created 2023-08-09 09:54:37">2023-08-09</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-08-09T02:21:41.565Z" title="Updated 2023-08-09 10:21:41">2023-08-09</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%A4%A7%E5%89%8D%E7%AB%AF%E5%89%91%E5%AE%97%E4%B8%93%E6%A0%8F/">大前端剑宗专栏</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Vue.js系列：实现一个自己的vue"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p><strong>本文开始，我们尝试着实现一个自个儿的vue框架（简陋版本）。</strong></p>
+<ol>
+<li>首先我们的页面结构如下：<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&lt;!<span class="variable constant_">DOCTYPE</span> html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;</span><br><span class="line">    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;</span><br><span class="line">    &lt;title&gt;My_vue&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;script src=&quot;./Compile.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;script src=&quot;./Myvue.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;div id=&quot;app&quot;&gt;</span><br><span class="line">        &lt;input type=&quot;text&quot; v-model=&quot;msg&quot;&gt;</span><br><span class="line">        &lt;div&gt;&#123;&#123;msg&#125;&#125;---&#123;&#123;info&#125;&#125;&lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    const mv = new MyVue(&#123;</span><br><span class="line">        el: &#x27;#app&#x27;,</span><br><span class="line">        data: &#123;</span><br><span class="line">            msg: &#x27;hello&#x27;,</span><br><span class="line">            info: &#x27;world&#x27;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+照葫芦画瓢，通过script标签引入我们的Myvue文件，然后在底部实例化mv。入参的名称参考vue。<br>样子有了，具体页面呢？<br>具体页面长这样：<img src="/img/vue_basic_1.jpg" alt="主页面结构" width="500"></li>
+</ol>
+<p>其中输入框通过v-model绑定变量msg，另一个文本绑定了info。可为什么原样显示呢？废话，应为我们还啥都没做。目前的Myvue代码如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyVue</span> &#123;</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params">vm</span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">vm</span> = vm</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">$data</span> = vm.<span class="property">data</span></span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">$el</span> = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(vm.<span class="property">el</span>)</span><br><span class="line">        <span class="keyword">new</span> <span class="title class_">Compile</span>(<span class="variable language_">this</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Myvue就是一个class类，其中拥有三个属性，vm，当前myvue的实例，更直白的将就是描述当前组件的那个入参对象；$data: 设置的各个变量；$el: 绑定的div的dom节点。<br>vue框架的做的第一件事情，就是页面渲染完成后，能够将其中的变量msg和info变成我们设置的值，而不是上面那副模样。这个过程，就是<strong>模板编译</strong>。即：<strong>能自动的将html代码中的变量，变成对应的值</strong>。比如我们预先定义的msg应该显示为hello,还能对v-model这样的指令进行解析，让input的value变成对应变量的值…<br>注释：前端领域的<strong>编译</strong>和我们传统的计算机专业内定义的<strong>编译</strong>有些不同，但是内核精神是一致的。写过c或者java都知道，我们写的程序是一套代码，但是这套代码机器无法直接运行，因为机器只能执行二进制，此处概念的理解可以去看看《编码》这本书，他会告诉你，<strong>cpu的本质，之际就是继电器。</strong>回过头来，因为机器看不懂我们人类系的代码，所以需要<strong>编译器</strong>这个中介，将我们写的这一套代码，转换成机器能够执行的二进制代码。而前端领域中的<strong>模板编译</strong>，指的是将如上图中，页面绑定的各个变量，转换成其真实的值。顺带提一句，webpack中的各种loader也可以看成是各种编译器，如babel-loader，因为浏览器看不懂es6及其之后版本的js代码，那么babel-loader的作用就是转换之。但是总的来说，本质的精神内核是一致的：<strong>自动转换</strong>。</p>
+<h4 id="实现我们的编译器Compile函数，完成模板编译工作。"><a href="#实现我们的编译器Compile函数，完成模板编译工作。" class="headerlink" title="实现我们的编译器Compile函数，完成模板编译工作。"></a>实现我们的编译器Compile函数，完成模板编译工作。</h4><p>具体的思路很清晰，就是找出存在msg或者info这样的变量所在的地方，然后用我们vue实例对象mv的data中的数据更新。<br>首先在html文件中引入一个单独的Compile.js文件:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;./Compile.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>Compile也是一个类。入参为当前的实例对象mv。具体代码如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//  什么叫编译模板---&gt;把template变成dom，如&#123;&#123;变量&#125;&#125;---&gt;真实的数据</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Compile</span> &#123;</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params">vm</span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">vm</span> = vm</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">el</span> = vm.<span class="property">$el</span></span><br><span class="line">        <span class="keyword">const</span> fragment = <span class="variable language_">this</span>.<span class="title function_">nodeToFragment</span>()</span><br><span class="line">        <span class="variable language_">this</span>.<span class="title function_">compile</span>(fragment)</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">vm</span>.<span class="property">$el</span>.<span class="title function_">appendChild</span>(fragment)</span><br><span class="line">        <span class="comment">// console.log(&#x27;f&#x27;, fragment)</span></span><br><span class="line">        <span class="comment">// 编译文档片段，解析&#123;&#123;&#125;&#125;</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 解析出&#123;&#123;&#125;&#125;,变量赋值</span></span><br><span class="line">    <span class="title function_">compile</span>(<span class="params">fragment</span>) &#123;</span><br><span class="line">        <span class="keyword">const</span> nList = fragment.<span class="property">childNodes</span></span><br><span class="line">        nList.<span class="title function_">forEach</span>(<span class="function">(<span class="params">node</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">const</span> nType = node.<span class="property">nodeType</span></span><br><span class="line">            <span class="keyword">if</span> (nType === <span class="number">3</span>) &#123;</span><br><span class="line">                <span class="variable language_">this</span>.<span class="title function_">compileText</span>(node)</span><br><span class="line">                <span class="comment">// 解析文本</span></span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (nType === <span class="number">1</span>) &#123;</span><br><span class="line">                <span class="variable language_">this</span>.<span class="title function_">compileElement</span>(node)</span><br><span class="line">                <span class="comment">// 元素节点</span></span><br><span class="line">                </span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (node.<span class="property">childNodes</span> &amp;&amp; node.<span class="property">childNodes</span> !== <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="variable language_">this</span>.<span class="title function_">compile</span>(node)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_">compileElement</span>(<span class="params">node</span>) &#123;</span><br><span class="line">        <span class="keyword">const</span> attrs = node.<span class="property">attributes</span></span><br><span class="line">        <span class="keyword">if</span> (!!attrs.<span class="property">length</span>) &#123;</span><br><span class="line">            <span class="keyword">const</span> attrsArr = <span class="title class_">Array</span>.<span class="title function_">from</span>(attrs)</span><br><span class="line">            attrsArr.<span class="title function_">forEach</span>(<span class="function">(<span class="params">att</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">if</span>(att.<span class="property">nodeName</span> === <span class="string">&#x27;v-model&#x27;</span>) &#123;</span><br><span class="line">                    <span class="keyword">const</span> val = att.<span class="property">value</span></span><br><span class="line">                    node.<span class="property">value</span> = <span class="variable language_">this</span>.<span class="property">vm</span>.<span class="property">$data</span>[val]</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_">compileText</span>(<span class="params">node</span>) &#123;</span><br><span class="line">        <span class="keyword">const</span> con = node.<span class="property">textContent</span></span><br><span class="line">        <span class="keyword">const</span> reg = <span class="regexp">/\&#123;\&#123;(.+?)\&#125;\&#125;/g</span></span><br><span class="line">        <span class="keyword">if</span>(reg.<span class="title function_">test</span>(con)) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(node)</span><br><span class="line">            <span class="keyword">const</span> newVal = con.<span class="title function_">replace</span>(reg, <span class="function">(<span class="params">...arg</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">vm</span>.<span class="property">$data</span>[arg[<span class="number">1</span>]]</span><br><span class="line">            &#125;)</span><br><span class="line">            node.<span class="property">textContent</span> = newVal</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_">nodeToFragment</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">const</span> f = <span class="variable language_">document</span>.<span class="title function_">createDocumentFragment</span>()</span><br><span class="line">        <span class="keyword">while</span>(<span class="variable language_">this</span>.<span class="property">el</span>.<span class="property">firstChild</span>) &#123;</span><br><span class="line">            f.<span class="title function_">appendChild</span>(<span class="variable language_">this</span>.<span class="property">el</span>.<span class="property">firstChild</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> f</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>逐一解释：</p>
+<ul>
+<li><ol>
+<li>两个属性：vm绑定实例mv，el绑定真实的dom。初始化时通过nodeToFragment方法拿到了一个输出，然后调用compile方法，其结果的输出直接被覆盖式的添加到了el中，完成编译工作。</li>
+</ol>
+</li>
+<li><ol start="2">
+<li><strong>nodeToFragment做了啥？</strong><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">nodeToFragment</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> f = <span class="variable language_">document</span>.<span class="title function_">createDocumentFragment</span>()</span><br><span class="line">    <span class="keyword">while</span>(<span class="variable language_">this</span>.<span class="property">el</span>.<span class="property">firstChild</span>) &#123;</span><br><span class="line">        f.<span class="title function_">appendChild</span>(<span class="variable language_">this</span>.<span class="property">el</span>.<span class="property">firstChild</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> f</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+创建了一个文档片段，然后自毁式遍历当前的el的儿子元素，依次添加到了文档片段f中。这里需要解释的一点是，当我们将el.firstChild添加到f中后，el的firstChild会变成之前的第二个，以此类推所以称之为自毁。但是呢，dom被添加到f中后，此时页面只会少不会增。可以理解为我们暂时性的找了个盒子，专门用来存放这些真实的dom。所以nodeToFragment函数的作用，就是把所有的真实儿子节点给到了文档片段f。然后以其作为输入，调用compile。</li>
+</ol>
+</li>
+<li><ol start="3">
+<li><strong>compile干了啥？找出所有的data中的变量</strong><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 解析出&#123;&#123;&#125;&#125;,变量赋值</span></span><br><span class="line"><span class="title function_">compile</span>(<span class="params">fragment</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> nList = fragment.<span class="property">childNodes</span></span><br><span class="line">    nList.<span class="title function_">forEach</span>(<span class="function">(<span class="params">node</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> nType = node.<span class="property">nodeType</span></span><br><span class="line">        <span class="keyword">if</span> (nType === <span class="number">3</span>) &#123;</span><br><span class="line">            <span class="variable language_">this</span>.<span class="title function_">compileText</span>(node)</span><br><span class="line">            <span class="comment">// 解析文本</span></span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (nType === <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="variable language_">this</span>.<span class="title function_">compileElement</span>(node)</span><br><span class="line">            <span class="comment">// 元素节点</span></span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (node.<span class="property">childNodes</span> &amp;&amp; node.<span class="property">childNodes</span> !== <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="variable language_">this</span>.<span class="title function_">compile</span>(node)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+该函数就是一个中转函数，然后交给对应的编译节点函数处理。遍历所有的子节点，然后根据nodeType分别处理。nodeType时节点的类型字段，比如，3就是文本text，1就是元素如div。<br><strong>对于文本节点的处理：</strong><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">compileText</span>(<span class="params">node</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> con = node.<span class="property">textContent</span></span><br><span class="line">    <span class="keyword">const</span> reg = <span class="regexp">/\&#123;\&#123;(.+?)\&#125;\&#125;/g</span></span><br><span class="line">    <span class="keyword">if</span>(reg.<span class="title function_">test</span>(con)) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(node)</span><br><span class="line">        <span class="keyword">const</span> newVal = con.<span class="title function_">replace</span>(reg, <span class="function">(<span class="params">...arg</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">vm</span>.<span class="property">$data</span>[arg[<span class="number">1</span>]]</span><br><span class="line">        &#125;)</span><br><span class="line">        node.<span class="property">textContent</span> = newVal</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+通过textContent属性，获取文本节点的具体内容，然后通过正则匹配双括号的规则，匹配出变量如、等。再根据vm.$data中对应的变量值，覆盖文本节点的textContent 。<strong>至此完成文本节点的变量—&gt;值的页面赋值。</strong></li>
+</ol>
+</li>
+</ul>
+<p><strong>对于元素节点的处理：</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">compileElement</span>(<span class="params">node</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> attrs = node.<span class="property">attributes</span></span><br><span class="line">    <span class="keyword">if</span> (!!attrs.<span class="property">length</span>) &#123;</span><br><span class="line">        <span class="keyword">const</span> attrsArr = <span class="title class_">Array</span>.<span class="title function_">from</span>(attrs)</span><br><span class="line">        attrsArr.<span class="title function_">forEach</span>(<span class="function">(<span class="params">att</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">if</span>(att.<span class="property">nodeName</span> === <span class="string">&#x27;v-model&#x27;</span>) &#123;</span><br><span class="line">                <span class="keyword">const</span> val = att.<span class="property">value</span></span><br><span class="line">                node.<span class="property">value</span> = <span class="variable language_">this</span>.<span class="property">vm</span>.<span class="property">$data</span>[val]</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对元素节点的解析是为了处理像v-model这样的自定应属性。通过attributes属性获取该元素的所有属性。找到v-model对应的变量名，然后改写node.value完成元素节点的变量—&gt;值的页面赋值。</p>
+<ul>
+<li><ol start="4">
+<li><strong>将文档片段直接塞入容器dom—el。更新页面中的所有绑定变量数据，完成模板解析。</strong><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">this</span>.<span class="property">vm</span>.<span class="property">$el</span>.<span class="title function_">appendChild</span>(fragment)</span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+</ul>
+<img src="/img/vue_basic_2.png" alt="插入文档片段，完成编译" width="500">
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="http://example.com">Hhvcg(旅途图)</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://example.com/2023/08/09/Vue.js%E7%B3%BB%E5%88%97%EF%BC%9A%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E8%87%AA%E5%B7%B1%E7%9A%84vue/">http://example.com/2023/08/09/Vue.js%E7%B3%BB%E5%88%97%EF%BC%9A%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E8%87%AA%E5%B7%B1%E7%9A%84vue/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/img/f.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2023/08/07/Vue.js%E7%B3%BB%E5%88%97%EF%BC%9Apatch/" title="Vue.js系列：patch"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">Vue.js系列：patch</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/f.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Hhvcg(旅途图)</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">29</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">8</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/didadida262"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/didadida262" target="_blank" title=""><i class="fab fa-github"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">変わらない闘志,折れない魂</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E6%88%91%E4%BB%AC%E7%9A%84%E7%BC%96%E8%AF%91%E5%99%A8Compile%E5%87%BD%E6%95%B0%EF%BC%8C%E5%AE%8C%E6%88%90%E6%A8%A1%E6%9D%BF%E7%BC%96%E8%AF%91%E5%B7%A5%E4%BD%9C%E3%80%82"><span class="toc-number">1.</span> <span class="toc-text">实现我们的编译器Compile函数，完成模板编译工作。</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/08/09/Vue.js%E7%B3%BB%E5%88%97%EF%BC%9A%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E8%87%AA%E5%B7%B1%E7%9A%84vue/" title="Vue.js系列：实现一个自己的vue">Vue.js系列：实现一个自己的vue</a><time datetime="2023-08-09T01:54:37.000Z" title="Created 2023-08-09 09:54:37">2023-08-09</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/08/07/Vue.js%E7%B3%BB%E5%88%97%EF%BC%9Apatch/" title="Vue.js系列：patch">Vue.js系列：patch</a><time datetime="2023-08-07T15:49:03.000Z" title="Created 2023-08-07 23:49:03">2023-08-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/08/07/Vue.js%E7%B3%BB%E5%88%97%EF%BC%9A%E8%99%9A%E6%8B%9Fdom/" title="Vue.js系列：虚拟dom">Vue.js系列：虚拟dom</a><time datetime="2023-08-07T15:45:28.000Z" title="Created 2023-08-07 23:45:28">2023-08-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/08/07/Vue.js%E7%B3%BB%E5%88%97%EF%BC%9A%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%8F%98%E5%8C%96%E4%BE%A6%E6%B5%8B/" title="Vue.js系列：对象的变化侦测">Vue.js系列：对象的变化侦测</a><time datetime="2023-08-07T14:39:40.000Z" title="Created 2023-08-07 22:39:40">2023-08-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/08/07/Vue.js%E7%B3%BB%E5%88%97%EF%BC%9A%E5%BA%8F%E7%AB%A0/" title="Vue.js系列：序章">Vue.js系列：序章</a><time datetime="2023-08-07T14:30:17.000Z" title="Created 2023-08-07 22:30:17">2023-08-07</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By Hhvcg(旅途图)</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

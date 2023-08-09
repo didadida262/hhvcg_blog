@@ -1,6 +1,6 @@
 ---
 title: Vue.js系列：实现一个自己的vue续篇
-category: 大前端气宗专栏
+category: 大前端剑宗专栏
 date: 2023-08-09 10:30:11
 tags:
 ---
@@ -25,7 +25,7 @@ class Obsever {
                 enumerable: true,
                 get() {
                     Dep.target && dep.addSub(Dep.target)
-                    console.log('搜集以来')
+                    console.log('搜集依赖')
                     return val
                 },
                 set(newVal) {

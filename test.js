@@ -1,27 +1,21 @@
-const data = [1,2,3,4]
-for (let key in data) {
-  let val = data[key]
-  Object.defineProperty(data, key, {
-      enumerable: true,
-      get() {
-          console.log('搜集以来')
-          return val
-      },
-      set(newVal) {
-          console.log('触发以来')
-          val = newVal
-      }
-  })
+const f = function(name) {
+  this.name = name
 }
-const oldProto = Array.prototype
-const newProto = Object.create(Array.prototype)
 
-;['push', 'pop'].forEach(method => {
-  newProto[method] = function(...args) {
-    console.log('gengxing')
-    oldProto[method].apply(this, args)
-  } 
-});
-data.__proto__ = newProto
+const o = new f('hhvcg')
+console.log('o>>>>>', o)
+console.log('o>>>>>1', o.prototype)
+console.log('o>>>>>2', o.__proto__)
 
-data.pop()
+
+const myNew = function(...args) {
+  const target = args[0]  
+  const child = Object.create(target.prototype)
+  target.call(child, ...args.slice(1))
+  return child
+}
+
+const oo = myNew(f, 'hhvcg2')
+console.log('oo>>>>>', oo)
+console.log('ooo>>>>>1', oo.prototype)
+console.log('ooo>>>>>2', oo.__proto__)

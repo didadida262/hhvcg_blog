@@ -116,3 +116,7 @@ console.log(child.name)
 ```
 
 我们把f函数的执行给到throttle，此时的throttle就是一个闭包函数。具体点讲，相当于在全局作用域上首先声明了一个flag，同时还有一个返回的函数。每当我们点击按钮时，都会执行返回的那个函数。
+
+**文章末尾祭出终极原理图，仅供参考**
+<img src="/img/js原型链.webp" alt="js原型链" width="500">
+

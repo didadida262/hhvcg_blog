@@ -25,7 +25,7 @@ category: Paperjs专栏
      */
     handleOut: Point
 ```
-<img src="/img/paperjs2_2.jpg" alt="">
+<img src="/img/paperjs2_2.webp" alt="">
 
 就是说，segment段(点)，在paperjs中，是组成图形的基本单位。上图中我们可以像二四的图形一样，展示每个segment点的handlein和handleout，像下面这样：
 ```javascript
@@ -99,7 +99,7 @@ x,y是他的坐标信息，这就不说了。
       this.x.strokeColor = 'black'
     },
 ```
-<img src="/img/paperjs2_4.jpg" alt="">
+<img src="/img/paperjs2_4.webp" alt="">
 
 - **关于quadrant**
 这个其实就是象限，在paperjs的坐标体系中，以中心点为坐标原点来算，画面分成四块，以右下角开始顺时针方向，分别是1234共四个象限.
@@ -115,18 +115,22 @@ point就不必赘述了，就是当前鼠标抬起的点，从画面中出现的
 #### 3. paperjs中的向量
 关于向量的定义，官方解释如下：
 > Vectors contain relative information. All a vector tells us is in which direction and how far to move.
+
 白话讲就是，向量能帮助我们，将一个点以某个方向且以某个距离移动。这同我们所学过的几何数学中的概念一致。向量在代码层面看，也是一个点Point实例，硬要说区别的话，就是官方的定义，向量包含的是相对信息，她告诉你方向和距离。注意：在paperjs中，vector是妥妥的一等公民。因为他实在是太过重要。在后面的”小蝌蚪军团“开发中，这个东西，起着巨大的作用。
 向量的直观表现形式如下图所示：
-<img src="/img/paperjs2_6.jpg" alt="">
+<img src="/img/paperjs2_6.webp" alt="">
 
 #### 4. 关于tool套件
 
 paperjs的toolapi也是相当强大，尤其针对要开发类似于标注平台的项目。该函数拥有鼠标点击、拖动、抬起等等一众好用的事件捕捉handler。具体详见官方文档，这里顺带提一下一开始令我无法理解的两个概念：maxDistance和minDistance。两者都是针对拖拽事件设定的。
 拿最小距离minDistance举例，官方注解：
 > The maximum distance the mouse has to drag before firing the onMouseDrag，event, since the last onMouseDrag event.
+
 翻译一下：从上次触发drag事件开始，触发本次drag所需的最大距离。（最小同理)
 这个东西，我一直很纳闷。为什么会存在两个距离？本次拖拽能否触发，我们只需要一个阈值不就好了？最大最小这两个概念，不是很奇怪？
 
 #### 5. Raster
 这东西说白了就是用来显示图片的。虽然用的很多，但是一直有个苦恼，就是这玩意的中文翻译到底是啥。这两天一段介绍电子游戏简史的youtube视频给了我答案。**raster和vector是一对儿，前者就是位图，后者就是矢量图。**两者的区别，我想接受过九年义务教育的同学立马顿悟。图像放大失真与否。
 注释：需要关注一下raster的onLoad方法，有些譬如设置size这样的操作，需要在onLoad中做，也就是图片加载完成之后再做。
+
+**毕。**

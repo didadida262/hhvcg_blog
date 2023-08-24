@@ -9,28 +9,28 @@ tags:
 **在这之前，先目睹一番paperjs的强大能力**
 
 **Tadpoles**
-<img src="/img/paperjs1_1.jpg" alt="Dom结构">
-<img src="/img/paperjs1_2.jpg" alt="Dom结构">
+<img src="/img/paperjs1_1.jpg" alt="">
+<img src="/img/paperjs1_2.jpg" alt="">
 
 蹦迪版的效果如下，其中的每个蝌蚪实例的颜色都是帧数级的在变化：
-<img src="/img/paperjs1_3.webp" alt="Dom结构">
+<img src="/img/paperjs1_3.webp" alt="">
 
 **svg引入tiger图像**
-<img src="/img/paperjs1_4.jpg" alt="Dom结构">
-<img src="/img/paperjs1_5.jpg" alt="Dom结构">
+<img src="/img/paperjs1_4.jpg" alt="">
+<img src="/img/paperjs1_5.jpg" alt="">
 
 **绘制各种基本图形**
-<img src="/img/paperjs1_6.webp" alt="Dom结构">
+<img src="/img/paperjs1_6.webp" alt="">
 
 **画笔工具系列--主要涉及tools工具包及向量相关操作实现**
-<img src="/img/paperjs1_7.webp" alt="Dom结构">
+<img src="/img/paperjs1_7.webp" alt="">
 
 **见缝插针**
-<img src="/img/paperjs1_8.jpg" alt="Dom结构">
+<img src="/img/paperjs1_8.jpg" alt="">
 
 **高斯梯度上色**
-<img src="/img/paperjs1_9.jpg" alt="Dom结构">
-<img src="/img/paperjs1_10.webp" alt="Dom结构">
+<img src="/img/paperjs1_9.jpg" alt="">
+<img src="/img/paperjs1_10.webp" alt="">
 
 
 

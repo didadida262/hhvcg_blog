@@ -1,0 +1,208 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>代码的味道 | 致敬仰望星空的人们</title><meta name="author" content="Hhvcg(旅途图)"><meta name="copyright" content="Hhvcg(旅途图)"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="究竟什么样的代码才是高质量可维护的代码（没有味道的代码）？什么样的组件才能叫作好的组件？函数怎么写才是干净、高效、得体的？瓦卡利马僧但是，本文中我们尝试着去瓦卡利。 1.组件化编程，单组件代码量限制在500行以内，能拆则拆。随着业务量代码的积累，自己突然感觉有点力不从心：代码太容易成为“屎山”了。就拿目前项目的一个场景举例：写一个创建任务的表单组件。听起来很简单是吧？是很简单，但写起来，极度费劲。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="代码的味道">
+<meta property="og:url" content="http://example.com/2023/08/25/%E4%BB%A3%E7%A0%81%E7%9A%84%E5%91%B3%E9%81%93/index.html">
+<meta property="og:site_name" content="致敬仰望星空的人们">
+<meta property="og:description" content="究竟什么样的代码才是高质量可维护的代码（没有味道的代码）？什么样的组件才能叫作好的组件？函数怎么写才是干净、高效、得体的？瓦卡利马僧但是，本文中我们尝试着去瓦卡利。 1.组件化编程，单组件代码量限制在500行以内，能拆则拆。随着业务量代码的积累，自己突然感觉有点力不从心：代码太容易成为“屎山”了。就拿目前项目的一个场景举例：写一个创建任务的表单组件。听起来很简单是吧？是很简单，但写起来，极度费劲。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/img/f.jpg">
+<meta property="article:published_time" content="2023-08-25T01:42:46.000Z">
+<meta property="article:modified_time" content="2023-08-25T01:58:30.113Z">
+<meta property="article:author" content="Hhvcg(旅途图)">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/f.jpg"><link rel="shortcut icon" href="/img/avatar.jpg"><link rel="canonical" href="http://example.com/2023/08/25/%E4%BB%A3%E7%A0%81%E7%9A%84%E5%91%B3%E9%81%93/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '代码的味道',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-08-25 09:58:30'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/f.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">42</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">9</div></a></div><hr class="custom-hr"/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="致敬仰望星空的人们"><span class="site-name">致敬仰望星空的人们</span></a></span><div id="menus"><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">代码的味道</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2023-08-25T01:42:46.000Z" title="Created 2023-08-25 09:42:46">2023-08-25</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-08-25T01:58:30.113Z" title="Updated 2023-08-25 09:58:30">2023-08-25</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%A4%A7%E5%89%8D%E7%AB%AF%E5%89%91%E5%AE%97%E4%B8%93%E6%A0%8F/">大前端剑宗专栏</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="代码的味道"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>究竟什么样的代码才是高质量可维护的代码（没有味道的代码）？什么样的组件才能叫作好的组件？函数怎么写才是干净、高效、得体的？<strong>瓦卡利马僧但是，本文中我们尝试着去瓦卡利。</strong></p>
+<h4 id="1-组件化编程，单组件代码量限制在500行以内，能拆则拆。"><a href="#1-组件化编程，单组件代码量限制在500行以内，能拆则拆。" class="headerlink" title="1.组件化编程，单组件代码量限制在500行以内，能拆则拆。"></a>1.组件化编程，单组件代码量限制在500行以内，能拆则拆。</h4><p>随着业务量代码的积累，自己突然感觉有点力不从心：代码太容易成为“屎山”了。就拿目前项目的一个场景举例：写一个创建任务的表单组件。听起来很简单是吧？是很简单，但写起来，极度费劲。原因在于，该创建表单项过多，且伴随着各种联动需求。一开始愣头愣脑的上去就是干。写到一半，发现已经写不下去了—-&gt;该文件已经超过了1000行，变量无数，单单flag就十几二十来个，如若再这么写下去，我估计即使勉强实现了需求，<strong>后面接手的人都会顺着网线来砍我</strong>。此时的我，<strong>内心是崩溃的。</strong><br>你能够想象，在一个单文件代码超过<strong>1000行</strong>游走是什么感觉吗？望着这座自己亲手堆砌的半坐“屎山“，觉得自己有义务寻求一些解决方案，免得被后人耻笑。简单的讲就是一个字：<strong>拆</strong>。在《<strong>重构</strong>》这本书的指导下，疯狂拆分这座屎山，当然，这个过程也是无偿加班的过程。最终单文件代码量干到了300来行，虽然被拆出去的儿子组件的可复用性几乎为0，但当自己看着不超过400行代码的主组件时，心情极度舒适，行云流水的代码结构，此刻的内心：<strong>至少后人不会来砍我。</strong></p>
+<p><strong>问题来了，如何写好一个组件？</strong></p>
+<ul>
+<li><strong>拆分的意义。</strong>在拆分的过程中，我一直有个疑虑：我的本意应该是搭积木式编程，不仅仅只是为了减少单个文件代码量，更希望拆出来的组件日后能够复用，但是现实却是，拆出来的代码几乎找不到复用的场景。又或者跟当初引用其的父组件耦合度高导致无法复用。所以现实就是，为了拆而拆。</li>
+<li><strong>写组件原则。</strong>看过开发经验超过五年的老前端写的组件。写的组件能够很好的实现项目的需求，组件代码写的也规规矩矩，其中可能还夹杂了一些风骚的写法。但是，当因为项目功能需求变更，需要改代码的时候，蒙蔽了：根本不好动。这方面，我觉得类似饿了么的ui组件库，提供了很好的思路：组件做到开箱即用，就行了。为了实现一个功能，组件套了一层又一层，props穿了一层又一层。。。。后面负责的同学的内心，是极度崩溃的。</li>
+</ul>
+<p><strong>组件之道</strong></p>
+<ol>
+<li>组件就是为了使得编程“积木化”，尽可能的精简，拿来即用。</li>
+<li>组建的props，能少则少。</li>
+<li>组件暴露的emit方法，一个中转函数集中处理即可。</li>
+<li>通用组件的前提，功能明确。否则就定制化，哪怕代码几乎一样，也得隔离开。否则就会如同修水管，后果你懂的</li>
+<li>必须果断屏蔽各种事件穿透、值穿透的行为。就是动不动$parent.x &#x3D; ‘x’,$parent.update()。。。</li>
+</ol>
+<h4 id="2-命名规则"><a href="#2-命名规则" class="headerlink" title="2.命名规则"></a>2.命名规则</h4><p>编程，尤其是在写前端代码的时候，最烦人的就是为组件的各种命名。我觉得，为了不被后人砍，还是需要一套标准，规范一下。</p>
+<ol>
+<li>变量名用名词；函数名用动词开始；返回布尔值用is开头。</li>
+<li>组件名称多个单词，同时单词大写开头，描述结构”名称+动词“</li>
+<li>紧密耦合的组件名应带上父组件名称</li>
+<li>props的命名：<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">props</span>: &#123;</span><br><span class="line">    <span class="attr">greetingText</span>: <span class="title class_">String</span></span><br><span class="line">&#125;</span><br><span class="line">...</span><br><span class="line">...</span><br><span class="line">&lt;<span class="title class_">WelcomeMessage</span> greeting-text=<span class="string">&quot;hi&quot;</span>/&gt;</span><br></pre></td></tr></table></figure></li>
+<li>多个 attribute 的元素应该分多行撰写，每个 attribute 一行。</li>
+<li>组件模板应该只包含简单的表达式，复杂的表达式则应该重构为计算属性或方法。</li>
+</ol>
+<h4 id="3-任何组件或者函数，注释一定要清楚。组建的props和响应事件，函数的输入输出，都必须详尽的书写。-可以借助一些插件"><a href="#3-任何组件或者函数，注释一定要清楚。组建的props和响应事件，函数的输入输出，都必须详尽的书写。-可以借助一些插件" class="headerlink" title="3.任何组件或者函数，注释一定要清楚。组建的props和响应事件，函数的输入输出，都必须详尽的书写。(可以借助一些插件)"></a>3.任何组件或者函数，注释一定要清楚。组建的props和响应事件，函数的输入输出，都必须详尽的书写。(可以借助一些插件)</h4><p>以前觉得代码风骚是褒义词，夸人的，各种骚气的写法写完就觉得很得意，但是，在具体的业务中，这类的风骚代码，如同垃圾。事实上不单单是别人看了你的风骚代码会骂人，有时候就连你自己隔了段时间再去看，都特么懒得看了，尤其是在还没有注释的情况下。<br><strong>插一句：</strong>关于注释，最近看到一个大哥提到的老毛子的风格：直接无注释，有注释，意味着函数不够简洁。有点道理，但不能全盘接受，注释可以精简，但一些比较大的函数或者模块，没有任何注释就是灾难。</p>
+<h4 id="4-优雅commit"><a href="#4-优雅commit" class="headerlink" title="4.优雅commit"></a>4.优雅commit</h4><p>提交commit可以有多随意？<br><img src="/img/paperjs4_1.png" alt=""></p>
+<p><strong>佛祖看了都直摇头。</strong>当然，上面因为是我个人项目就无所谓了。在公司的团队中开发，当然不能向上面那般commit，我们需要一些规范。配合husky，逼格瞬间提升了一个档次。</p>
+<blockquote>
+<p>type: commit 的类型<br> feat: 新特性<br> fix: 修改问题<br> refactor: 代码重构<br> docs: 文档修改<br> style: 代码格式修改, 注意不是 css 修改<br> test: 测试用例修改<br> chore: 其他修改, 比如构建流程, 依赖管理.<br> scope: commit 影响的范围, 比如: route, component, utils, build…<br> subject: commit 的概述, 建议符合  50&#x2F;72 formatting<br> body: commit 具体修改内容, 可以分为多行, 建议符合 50&#x2F;72 formatting<br> footer: 一些备注, 通常是 BREAKING CHANGE 或修复的 bug 的链接.</p>
+</blockquote>
+<h4 id="5-函数编写规则"><a href="#5-函数编写规则" class="headerlink" title="5.函数编写规则"></a>5.函数编写规则</h4><p>我现在最烦见到的代码，就是那种包裹着一坨代码的函数，真的很恶心。一个函数恨不得把所有事儿都做了，把所有的代码都塞进去，这么个写法，您干嘛还费劲写个函数包起来呢？</p>
+<ol>
+<li>整洁的代码，只做好一件事。</li>
+<li>函数的第一原则，就是短小，第二原则，就是还要更短小。</li>
+<li>函数的入参， 0个最佳，1个次之，两个再次，坚决杜绝两个以上的入参。</li>
+<li>容易适配，即数据发生变化也无需重写。这一点借助ts的interface类型，能够完美规避。任何函数的入参，需要对数据的结构作严格的定义。</li>
+</ol>
+<h4 id="6-关于vue的值传递"><a href="#6-关于vue的值传递" class="headerlink" title="6.关于vue的值传递"></a>6.关于vue的值传递</h4><p>请看下面这张堪称“经典”的组件样例：<br><img src="/img/paperjs4_2.png" alt=""></p>
+<p>第一反应，真是苦了先前写这组件的大哥了，确实是不容易。第二反应是啥我就不说了都懂。<strong>组件写成这般，我建议直接枪毙。</strong>塞了这么多的参数？方法就写了五个？怎么下得了手的？<br>写vue差不多也两年了，关于组建的规范，我有两点认为是比较重要的：</p>
+<ol>
+<li>父传子的值，统一用一个对象传递。</li>
+<li>子对父的改动，统一用一个中转函数集中处理。严禁直接使用$parent这样的方法，一时写一时爽，一直写这玩意那真的就是一直爽了。<br>最后再强调一点，组件能写成上面样例那样的，真心建议墙壁。</li>
+</ol>
+<p><strong>…先讲这么多，后面不定期更新</strong></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="http://example.com">Hhvcg(旅途图)</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://example.com/2023/08/25/%E4%BB%A3%E7%A0%81%E7%9A%84%E5%91%B3%E9%81%93/">http://example.com/2023/08/25/%E4%BB%A3%E7%A0%81%E7%9A%84%E5%91%B3%E9%81%93/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/img/f.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2023/08/25/Paperjs%EF%BC%9A%E5%83%8F%E7%B4%A0%E6%89%93%E5%8D%B0%E6%9C%BA/" title="Paperjs：像素打印机"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">Paperjs：像素打印机</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/f.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Hhvcg(旅途图)</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">42</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">9</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/didadida262"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/didadida262" target="_blank" title=""><i class="fab fa-github"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">変わらない闘志,折れない魂</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E7%BB%84%E4%BB%B6%E5%8C%96%E7%BC%96%E7%A8%8B%EF%BC%8C%E5%8D%95%E7%BB%84%E4%BB%B6%E4%BB%A3%E7%A0%81%E9%87%8F%E9%99%90%E5%88%B6%E5%9C%A8500%E8%A1%8C%E4%BB%A5%E5%86%85%EF%BC%8C%E8%83%BD%E6%8B%86%E5%88%99%E6%8B%86%E3%80%82"><span class="toc-number">1.</span> <span class="toc-text">1.组件化编程，单组件代码量限制在500行以内，能拆则拆。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%91%BD%E5%90%8D%E8%A7%84%E5%88%99"><span class="toc-number">2.</span> <span class="toc-text">2.命名规则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E4%BB%BB%E4%BD%95%E7%BB%84%E4%BB%B6%E6%88%96%E8%80%85%E5%87%BD%E6%95%B0%EF%BC%8C%E6%B3%A8%E9%87%8A%E4%B8%80%E5%AE%9A%E8%A6%81%E6%B8%85%E6%A5%9A%E3%80%82%E7%BB%84%E5%BB%BA%E7%9A%84props%E5%92%8C%E5%93%8D%E5%BA%94%E4%BA%8B%E4%BB%B6%EF%BC%8C%E5%87%BD%E6%95%B0%E7%9A%84%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%EF%BC%8C%E9%83%BD%E5%BF%85%E9%A1%BB%E8%AF%A6%E5%B0%BD%E7%9A%84%E4%B9%A6%E5%86%99%E3%80%82-%E5%8F%AF%E4%BB%A5%E5%80%9F%E5%8A%A9%E4%B8%80%E4%BA%9B%E6%8F%92%E4%BB%B6"><span class="toc-number">3.</span> <span class="toc-text">3.任何组件或者函数，注释一定要清楚。组建的props和响应事件，函数的输入输出，都必须详尽的书写。(可以借助一些插件)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E4%BC%98%E9%9B%85commit"><span class="toc-number">4.</span> <span class="toc-text">4.优雅commit</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-%E5%87%BD%E6%95%B0%E7%BC%96%E5%86%99%E8%A7%84%E5%88%99"><span class="toc-number">5.</span> <span class="toc-text">5.函数编写规则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-%E5%85%B3%E4%BA%8Evue%E7%9A%84%E5%80%BC%E4%BC%A0%E9%80%92"><span class="toc-number">6.</span> <span class="toc-text">6.关于vue的值传递</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/08/25/%E4%BB%A3%E7%A0%81%E7%9A%84%E5%91%B3%E9%81%93/" title="代码的味道">代码的味道</a><time datetime="2023-08-25T01:42:46.000Z" title="Created 2023-08-25 09:42:46">2023-08-25</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/08/25/Paperjs%EF%BC%9A%E5%83%8F%E7%B4%A0%E6%89%93%E5%8D%B0%E6%9C%BA/" title="Paperjs：像素打印机">Paperjs：像素打印机</a><time datetime="2023-08-25T01:35:40.000Z" title="Created 2023-08-25 09:35:40">2023-08-25</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/08/24/Paperjs%EF%BC%9A%E5%85%88%E9%AA%8C%E5%86%85%E5%AE%B9/" title="Paperjs：先验内容">Paperjs：先验内容</a><time datetime="2023-08-24T02:57:25.000Z" title="Created 2023-08-24 10:57:25">2023-08-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/08/24/Paperjs-%E5%BA%8F%E7%AB%A0/" title="Paperjs: 序章">Paperjs: 序章</a><time datetime="2023-08-24T02:29:52.000Z" title="Created 2023-08-24 10:29:52">2023-08-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/08/23/Webkit%E7%B3%BB%E5%88%97%EF%BC%9AHTML%E8%A7%A3%E9%87%8A%E5%99%A8%E5%92%8CDOM%E6%A8%A1%E5%9E%8B/" title="Webkit系列：HTML解释器和DOM模型">Webkit系列：HTML解释器和DOM模型</a><time datetime="2023-08-23T15:32:28.000Z" title="Created 2023-08-23 23:32:28">2023-08-23</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By Hhvcg(旅途图)</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

@@ -1,6 +1,6 @@
 ---
 title: JS类型详论
-category: 大前端剑宗专栏
+category: 大前端气宗专栏
 date: 2023-08-03 14:47:06
 tags:
 ---

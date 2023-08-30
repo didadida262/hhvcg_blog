@@ -4,10 +4,9 @@ date: 2023-07-24 22:39:47
 tags:
 category: Webpack系列
 ---
-继前文简单介绍了下前端模块发展史，以此作为铺垫，本文将会简单梳理下webpack的基本打包思路。
+### 继前文简单介绍了下前端模块发展史，以此作为铺垫，本文将会简单梳理下webpack的基本打包思路，最终目标，手撕一个自己的webpack
 
-### Webpack打包总体流程
-#### 最最精简的webpack打包文件
+#### 最最精简的webpack打包
 ```js
 (function(modules) { // webpackBootstrap
      // The module cache已经加载过的模块
@@ -53,6 +52,9 @@ category: Webpack系列
 #### 4. 将执行入口文件的逻辑放在一个函数表达式中，并立即执行这个函数
 - 需要注意__webpack_require__是一个递归
 
+
+- __webpack_modules__
+- __webpack_require__
 
 
 

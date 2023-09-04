@@ -11,7 +11,7 @@ category: Webpack系列
 使用方式: const parser = require("@babel/parser");
 
 借助`https://astexplorer.net/`, 查看结果。
-<img src="/img/webpack3_1" alt="parser" width="500" height="300">
+<img src="/img/webpack3_1.png" alt="parser">
 
 重点关注body字段。由图中能清楚的看到，左侧完整的四段代码块，解析出来的ast数据，对应着body中的四个不同类型节点。 
 

@@ -3,6 +3,7 @@
 node_modules/
 dist/
 db.json
+public
 .deploy_git
 npm-debug.log*
 yarn-debug.log*

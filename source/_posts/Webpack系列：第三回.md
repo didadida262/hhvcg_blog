@@ -4,69 +4,38 @@ date: 2023-07-24 22:39:47
 tags:
 category: Webpack系列
 ---
-### 继前文简单介绍了下前端模块发展史，以此作为铺垫，本文将会简单梳理下webpack的基本打包思路，最终目标，手撕一个自己的webpack
+### 本文可以看成是我们开始diyWebapck前的开胃内容，介绍一些必备的知识点，为之后做铺垫。
 
-#### 最最精简的webpack打包
-```js
-(function(modules) { // webpackBootstrap
-     // The module cache已经加载过的模块
-    var installedModules = {};
-    // The require function模块加载函数， 核心
-    function __webpack_require__(moduleId) {
-        // Check if module is in cache判断模块是否已经加载过，若加载过直接返回加载的模块
-        if(installedModules[moduleId]) {
-             return installedModules[moduleId].exports;
-        }
-         // Create a new module (and put it into the cache)
-         var module = installedModules[moduleId] = {
-             i: moduleId,
-             l: false,
-            exports: {}
-         };
+#### babel相关api的功能。
+- **@babel/parser：能够将通过readfile读取的文件内容，转化为ast数据。**
+使用方式: const parser = require("@babel/parser");
 
-         // Execute the module function执行加载函数
-         modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+借助`https://astexplorer.net/`, 查看结果。
+<img src="/img/webpack3_1.png" alt="parser">
 
-         // Flag the module as loaded标记该模块已经加载
-        module.l = true;
+重点关注body字段。由图中能清楚的看到，左侧完整的四段代码块，解析出来的ast数据，对应着body中的四个不同类型节点。 
 
-        // Return the exports of the module
-         return module.exports;
-     }
-     return __webpack_require__(0) //入口文件
+- **@babel/traverse：遍历ast中所有节点，根据需求，重写节点内容**
+- **@babel/types: 构建新的babel的ast类型数据**
+- **@babel/generator：与parser为互逆操作，ast--> 字符串数据**
+- **ejs： 模板生成。**
+拿我们最终生成bundle.js代码的函数举例， generateCode入参就是我们已经处理好的ast，还有个入口文件地址。读取模板文件内容，然后调用ejs.render，作为其参数。另一个参数则是模板中可能会用到的变量。
+```javascript
+// 生成bundle.js文件代码
+const  generateCode = (allAst, entry) =>  {
+    const temlateFile = fs.readFileSync(
+      path.join(__dirname, "./template.js"),
+      "utf-8"
+    );
+  
+    const codes = ejs.render(temlateFile, {
+      __TO_REPLACE_WEBPACK_MODULES__: allAst,
+      __TO_REPLACE_WEBPACK_ENTRY__: entry,
+    });
+  
+    return codes;
+}
 
- })([
-    // 依赖数组
-/* 0 */
- (function(module, exports) {
-    module.exports = "Hello World";
- }
- ...
- ...
- )]);
 ```
-#### 1. 从入口文件开始，分析文件的所有依赖
-#### 2. 将每一个依赖模块包装起来，放进一个数组中等待调用
-- 此处的数组，就是IIFE的入参依赖数组
-#### 3. 实现模块加载的方法，并将其放入模块执行的环境中，确保可调用
-#### 4. 将执行入口文件的逻辑放在一个函数表达式中，并立即执行这个函数
-- 需要注意__webpack_require__是一个递归
-
-
-- __webpack_modules__
-- __webpack_require__
-
-
-
-
-
-#### 补充webpack的生命周期
-
-1. `beforeRun`：Webpack 进入编译前的阶段，此时会初始化 Compiler 对象。
-2. `run`：Webpack 开始编译前的阶段，此时会读取入口文件和依赖，并创建依赖图。
-3. `compilation`：Webpack 进入编译阶段，此时会开始编译入口文件和依赖的模块，并生成输出文件。
-4. `emit`：Webpack 生成输出文件前的阶段，此时可以在插件中处理生成的输出文件。
-5. `done`：Webpack 完成打包后的阶段，此时可以在插件中进行一些清理工作。
-
 
 

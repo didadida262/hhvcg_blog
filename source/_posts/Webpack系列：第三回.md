@@ -10,7 +10,7 @@ category: Webpack系列
 - **@babel/parser：能够将通过readfile读取的文件内容，转化为ast数据。**
 使用方式: const parser = require("@babel/parser");
 
-借助`https://astexplorer.net/`, 查看结果。
+借助`https://astexplorer.net/`, 查看结果。示例代码中的四段代码分别对应body中的四种类型。
 <img src="/img/webpack3_1.png" alt="parser">
 
 重点关注body字段。由图中能清楚的看到，左侧完整的四段代码块，解析出来的ast数据，对应着body中的四个不同类型节点。 

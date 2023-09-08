@@ -6,6 +6,9 @@ category: Webkit系列
 
 
 ### 一些关于浏览器的先验内容
+
+<img src="/img/webkit_history.jfif" alt="">
+
 2005年苹果开源了自家的safari浏览器内核`webkit`，2008年，谷歌改造webkit为`blink`，开发出了`chromium`，最终推出chrome。
 
 chrome是一个典型的多进程的架构，即chrome这么个应用，是由多个子进程组成的，具体包括如下：

@@ -182,6 +182,7 @@ const deepClone = (obj) => {
     const res = {}
     for (let key in obj) {
         if (!obj.hasOwnProperty(key)) continue
+        // 还有Date、正则等特殊类型
         if (Array.isArray(obj[key])) {
             res[key] = obj[key].map((item) => {
                 if (typeof item === 'object') {

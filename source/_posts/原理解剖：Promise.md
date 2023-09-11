@@ -1,0 +1,50 @@
+---
+title: 原理解剖：Promise
+date: 2023-09-11 10:42:59
+category: 大前端气宗专栏
+
+---
+
+### 本文从原理层面介绍Promise（期约），同时通过手撕一个promise加深对其的理解
+
+1. **首先我们要明白，这个promise到底是个啥？能用他来干嘛。**
+
+Promise是一个类，因为他保证未来的某个时间点返回一个特定的不可更改的状态：成功或者失败，然后调用对应的then或者catch回调函数。
+```javascript
+const p = new Promise((resolve, reject) => {
+    console.log('promise-start')
+    resolve('asdasd')
+    reject('xxx')
+})
+
+p.then((res) => {
+    console.log('res>>', res)
+})
+
+p.catch((err) => {
+    console.log('err>>', err)
+})
+```
+本质上跟我们new一个数组一样的，但是总感觉看着很变扭。
+从代码中可知，该类的入参是一个回调函数。new的时候，该回调函数立即执行。
+好了，既然是一个类，那我们就照葫芦画瓢，写一个类，同时在constructor立即执行回调。
+
+```javascript
+class MyPromise {
+    constructor(exector) {
+        exector()
+    }
+    
+}
+const p = new MyPromise((resolve, reject) => {
+    console.log('promise-start')
+    // resolve('asdasd')
+    // reject('xxx')
+})
+// 打印结果
+// promise-start
+
+```
+
+2. **resolve和reject**
+两者分别对应成功和失败的状态。resolve就会走then的回调，reject就会走catch的回调。`注意，状态一旦确定，不可变更`

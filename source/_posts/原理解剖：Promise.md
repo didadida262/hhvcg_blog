@@ -48,3 +48,54 @@ const p = new MyPromise((resolve, reject) => {
 
 2. **resolve和reject**
 两者分别对应成功和失败的状态。resolve就会走then的回调，reject就会走catch的回调。`注意，状态一旦确定，不可变更`
+将resolve和reject给到callback,执行入参函数.然后调用then和catch方法时直接执行callback即可.
+我们的diyPromise完整代码如下所示:
+
+```javascript
+class MyPromise {
+    constructor(exector) {
+        this.initData()
+        this.initBind()
+        exector(this.resolve, this.reject)
+    }
+    initData() {
+        this.promiseResult = ''
+        this.promiseStatus = 'pending'
+    }
+    initBind () {
+        // 初始化this
+        this.resolve = this.resolve.bind(this)
+        this.reject = this.reject.bind(this)
+    }
+    resolve(data) {
+        if (this.promiseStatus === 'pending') {
+            this.promiseStatus = 'resolve'
+            this.promiseResult = data
+        }
+    }
+    reject(data) {
+        if (this.promiseStatus === 'pending') {
+            this.promiseStatus = 'reject'
+            this.promiseResult = data
+        }
+    }
+    then(callback) {
+        callback(this.promiseResult)
+    }
+    catch(callback) {
+        callback(this.promiseResult)
+    }
+    
+}
+
+const p = new MyPromise((resolve, reject) => {
+    console.log('promise-start')
+    // resolve('asdasd')
+    reject('xxx')
+})
+p.then((res) => {
+    console.log('res>>>', res)
+})
+```
+
+

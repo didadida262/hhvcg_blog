@@ -1,5 +1,5 @@
 ---
-title: Vue.js：computed与watch
+title: Vue.js系列：computed与watch
 date: 2023-09-10 03:19:56
 category: 大前端剑宗专栏
 ---

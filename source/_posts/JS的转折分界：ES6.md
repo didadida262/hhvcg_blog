@@ -1,0 +1,51 @@
+---
+title: 'JS的转折分界: ES6'
+category: 大前端气宗专栏
+date: 2023-08-07 17:03:48
+tags:
+---
+
+不管有没有系统的去学习ES6相关的概念，但我相信，在日常开发中，都或多或少的使用到了相关方法。笔者一直很纳闷，事实上ES6从发布至今也蛮长时间了，但是面试的时候总会有面试官问这么个问题：ES6有什么新的特性。。。。事实上这是因为该版本,对于js这门语言而言,具有里程碑的意义.**那么本文尝试着将最重大的改动梳理梳理.**
+
+- 1. 首当其冲的必定是let、const块级作用域声明方式。同var相比两个不同。块级作用域能够屏蔽var的变量提升，将变量的生命周期局限在块中。本质讲，let、const声明在作用域外无法访问的变量。
+```javascript
+const f = function () {
+    if (false) {
+        let name = '1234'
+        //var name = '1234'
+    }
+    console.log('name:', name)
+}
+f()
+```
+
+- 2. 模板字面量。简单地讲，就是可以在字符串中灵活插入变量。如下面代码所示。变量用${}插入。同时需要注意的是` `中间的空格及换行，也会真实的展示出来。
+```javascript
+  const log = console.log.bind(console)
+  let s = '123456'
+  log(`number is ${s}`)
+  log(`this is
+  test`)
+  // this is
+  // test
+```
+- 3. 箭头函数。这个概念也是面试必问的点。稍微总结一下他与普通函数的区别：(1)： 没有arguments、this、super等。(2)：不能通过new方法创建实例。因为没有consturct，也就不存在原型。
+**箭头函数尤其需要注意的一点，就是函数内部的this指向。其实很简单，有最近一层非箭头函数决定。以我目前看，箭头函数的实质，乃代码装x之大杀器。**
+
+
+- 4. Object.is()。这个方法提供了判断两值是否相等的终极大杀器。我们知道，在js中，判断相等通常会使用“==”和“===”。其中后者较为普遍，因为前者涉及隐含的类型转换，出现bug。但即使是“===”强等于判断，依然有问题。举例，NaN === NaN，实质上是一个东西，但返回的确实false。对于-0与+0，两者在js中是不同的，但返回的却是true。而用Object.is()来判断，完美符合真实情况。写到这里，笔者想说，在几乎所有的开发中，“===”基本能满足需求。而Object.is()这个方法的出现，我认为是js这门语言不断优化进步的体现。
+- 5. promise。这东西实质上就是利用回调函数自己做了封装，看起来舒服点。
+- 6. 关于proxy代理的理解（vue3中响应式数据原理）
+```javascript
+const proxyUser = new Proxy(user, {
+    get (target, prop) {
+        console.log('get....')
+        return Reflect.get(target, prop)
+    },
+    set (target, prop, val) {
+        console.log('set....')
+        return Reflect.set(target, prop, val)
+    }
+})
+```
+这里需要分清楚两个概念，上面代码中的目标对象user，和代理对象proxyUser，代理对象的改动就是改动目标对象。使用proxy对目标对象的内部数据劫持，并通过reflect操作对象的内部数据。

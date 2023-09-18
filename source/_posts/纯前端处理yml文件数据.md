@@ -7,31 +7,25 @@ category:
 
 
 ```javascript
-      // // 解析 YAML 文件内容
-      // const data = require('./test.trf')
-      // console.log('data>>>', data)
-      // const parsedData = yaml.load(data)
-      // console.log('parsedData>>>>', parsedData)
-
-      // // 创建 SQLite 数据库（使用浏览器内置的 IndexedDB）
-      // const dbPromise = indexedDB.open('myDatabase', 1)
-
-      // // 创建数据表并插入数据
-      // dbPromise.onupgradeneeded = (event) => {
-      //   const db = event.target.result
-      //   const objectStore = db.createObjectStore('people', { keyPath: 'name' })
-      //   parsedData.forEach((person) => {
-      //     objectStore.add(person)
-      //   })
-      // }
-
-      // // 处理成功打开数据库的情况
-      // dbPromise.onsuccess = (event) => {
-      //   console.log('数据库已成功打开')
-      // }
-
-      // // 处理数据库打开失败的情况
-      // dbPromise.onerror = (event) => {
-      //   console.error('数据库打开失败')
-      // }
+      import yaml from 'js-yaml'
+    // 处理文件输出sql能接受的数据
+    async getFileToSqliteData(file) {
+      const rrr = await this.readFile(new Blob([file.raw]))
+      const parsedData = yaml.load(rrr) // 输出为 json 格式
+      return parsedData
+    },
+      async readFile(blob) {
+      const reader = new FileReader(blob)
+      const promise = new Promise((resolve, reject) => {
+        reader.onload = function() {
+          resolve(reader.result)
+        }
+        reader.onerror = function(e) {
+          reader.abort()
+          reject(e)
+        }
+      })
+      reader.readAsText(blob, 'UTF-8') // 将文件读取为文本
+      return promise
+    },
 ```

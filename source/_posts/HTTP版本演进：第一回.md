@@ -29,7 +29,7 @@ connection closed
 相较于0.9版本，除get请求，新增了post、put等其他方式。同时有了首部、状态码的概念，有了重定向、压缩等的功能加持。有了MIME类型，支持多媒体资源传输。那么从1.0开始，http严格意义上应该称之为HMTP（hypermedia transport）。请求响应流程还是0.9那一套。
 **注**：`MIME`是一种文本标记，标识了传输资源的类型，常见的如`text/plain、text/html、image/jpeg`等。规则：`对象类型/特定子类型`
 
-<img src="/img/http.webp" alt="图片描述" width="500" height="300">
+<img src="/img/http.webp" alt="图片描述">
 
 ### 1.1版本
 同前两个版本比较，1.1版本的改进：
@@ -38,7 +38,8 @@ connection closed
 - 新增cache-control缓存资源，特定的资源无需发送请求。
 - 管道化。请求无需等待并行发送。
 
-<img src="/img/http2.jpg" alt="图片描述" width="500" height="300">
+<img src="/img/http2.jpg" alt="图片描述">
 
 ### 2.0版本
 http2.0的设计初衷只有一个，就是提高传输性能，包括低延时和高吞吐量。二进制分帧，将数据块分成更小的数据帧。多路复用，响应并行交错返回。头部压缩.详细介绍见后续文章
+ 

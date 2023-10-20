@@ -20,14 +20,12 @@ tags:
 - 最后指明一点：loader和plugin都是**可插拔**的，意味着不是强制使用，根据需求灵活搭配。
 
 
-
-
 #### 补充webpack的生命周期
-1. `beforeRun`：Webpack 进入编译前的阶段，此时会初始化 Compiler 对象。
-2. `run`：Webpack 开始编译前的阶段，此时会读取入口文件和依赖，并创建依赖图。
-3. `compilation`：Webpack 进入编译阶段，此时会开始编译入口文件和依赖的模块，并生成输出文件。
-4. `emit`：Webpack 生成输出文件前的阶段，此时可以在插件中处理生成的输出文件。
-5. `done`：Webpack 完成打包后的阶段，此时可以在插件中进行一些清理工作。
+1. `beforeRun`：Webpack进入编译前的阶段，此时会初始化 Compiler 对象。
+2. `run`：Webpack开始编译前的阶段，此时会读取入口文件和依赖，并创建依赖图。
+3. `compilation`：Webpack进入编译阶段，此时会开始编译入口文件和依赖的模块，并生成输出文件。
+4. `emit`：Webpack输出资源到output目录之后的阶段，此时可以在插件中处理生成的输出文件。
+5. `done`：Webpack完成打包后的阶段，此时可以在插件中进行一些清理工作。
 
 
 

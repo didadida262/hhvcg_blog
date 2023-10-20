@@ -14,8 +14,8 @@ tags:
 因此，我们的神器`webpack`应运而生。当然啦，除了他还有很多其他的如`gulp`、`parcel`等的工具，非独此一款。
 
 #### webpack具体的能力
-- **合并文件**。在项目中，我们可能会到处import各种依赖，这些以来又分布在各个文件中。webpack做的事情，说白了就是把所有的依赖代码，合并到一个js文件中。
-- **翻译官角色-loader**。首先大前提，webpack默认只能处理js文件， 但是实际开发中一般都需要import一些除js的其他资源，如图片，样式等文件，此时，就需要使用各种loader帮助我们做编译转化的工作。比如我们需要用babel-loader处理es6版本及其之后的js，ts-loader处理ts文件，处理样式文件的用style-loader、css-loader、less-loader等等等。
+- **合并文件**。在项目中，我们可能会到处import各种依赖，这些依赖又分布在各个文件中。webpack做的事情，说白了就是把所有的依赖代码，合并到一个js文件中。
+- **翻译官角色-loader**。首先大前提，webpack默认只能处理js文件， 但是实际开发中一般都需要import一些除js的其他资源，如图片，样式等文件，此时，就需要使用各种loader帮助我们做编译转化的工作。比如我们需要用`babel-loader`处理es6版本及其之后的js，`ts-loader`处理ts文件，处理样式文件的用`style-loader`、`css-loader`、`less-loader`等等等。
 - **做点其他小动作-plugin**。例如打包过程的进度条等。
 - 最后指明一点：loader和plugin都是**可插拔**的，意味着不是强制使用，根据需求灵活搭配。
 

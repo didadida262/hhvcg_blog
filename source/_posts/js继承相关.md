@@ -1,5 +1,5 @@
 ---
-title: js继承相关
+title: JS继承相关
 category: 大前端气宗专栏
 date: 2023-08-21 11:04:11
 tags:

@@ -4,23 +4,21 @@ category: Webpack系列
 date: 2023-07-25 01:12:55
 tags:
 ---
-### 以前面的先验内容为铺垫，本文将会仔细的梳理下webpack的基本打包思路，最终目标，手撕一个自己的webpack。
+### 以前面的先验内容为铺垫，本文将会仔细的介绍webpack的基本打包思路，最终目标，手撕一个自己的webpack。
 
-首先再次重申一个重点：**webpack的根本目的,是为了将我们写的代码转换成浏览器能够执行的代码,并且将分散的各个模块，揉成一个统一的文件。**那么我们的mywebpack.js的功能就是一个，输入我们的模块代码，输出转换后的代码，写到bundle.js文件，成功与否检验的标准就一个，index.html引入该bundle.js，看看浏览器能否正确显示。
+首先再次重申一个重点：**webpack的根本目的,是为了将我们写的代码转换成浏览器能够执行的代码,并且将分散的各个模块，揉成一个统一的文件。然后直接在index.js中引入即可**
+那么我们的`mywebpack.js`的目标就是一个，从入口文件读取各个模块，生成转换后的代码，写到`bundle.js`文件，成功与否检验的标准就一个，index.html引入该bundle.js，看看浏览器能否正确显示。
 
-实际讲解之前，准备好一些相关的文件。index.html、index.js、helloGirl.js和hello.js、template模板文件，当然还有我们最为重要的mywebpack.js。
+实际讲解之前，准备好一些相关的文件。`index.html、index.js、helloGirl.js和hello.js、template模板文件`，当然还有我们最为重要的`mywebpack.js`。
 ```javascript
 // 1. 其中index.js入口文件，四段极为工整的代码块。：
 import helloGirl from "./helloGirl.js";
-
 const helloWorldStr = helloGirl();
-
 function component() {
   const element = document.createElement("div");
   element.innerHTML = helloWorldStr;
   return element;
 }
-
 document.body.appendChild(component());
 
 // 2. 其中helloGirl.js
@@ -29,14 +27,11 @@ const world = 'girl';
 const helloWorld = () => `${hello} ${world}`;
 export default helloWorld;
 
-
 // 3. 其中hello.js
 const hello = 'hello';
 export default hello;
 
-
 // 4.config.js
-
 const path = require('path')
 module.exports = {
   entry: './mywebpackentry.js',
@@ -45,6 +40,7 @@ module.exports = {
     filename: 'bundle.js'
   },
 }
+
 // 5. template模板文件.js
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";

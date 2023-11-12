@@ -14,12 +14,13 @@ category: Webpack系列
 <img src="/img/webpack3_1.png" alt="parser">
 
 重点关注body字段。由图中能清楚的看到，左侧完整的四段代码块，解析出来的ast数据，对应着body中的四个不同类型节点。 
-
 - **@babel/traverse：遍历ast中所有节点，根据需求，重写节点内容**
 - **@babel/types: 构建新的babel的ast类型数据**
 - **@babel/generator：与parser为互逆操作，ast--> 字符串数据**
 - **ejs： 模板生成。**
-拿我们最终生成bundle.js代码的函数举例， generateCode入参就是我们已经处理好的ast，还有个入口文件地址。读取模板文件内容，然后调用ejs.render，作为其参数。另一个参数则是模板中可能会用到的变量。
+
+从总体的逻辑，大概介绍下webpack最终的产物`bundle.js`生成的逻辑
+`generateCode`入参就是我们已经处理好的ast，还有个入口文件地址。读取模板文件内容，然后调用ejs.render，作为其参数。另一个参数则是模板中可能会用到的变量。
 ```javascript
 // 生成bundle.js文件代码
 const  generateCode = (allAst, entry) =>  {
@@ -35,7 +36,6 @@ const  generateCode = (allAst, entry) =>  {
   
     return codes;
 }
-
 ```
 
 

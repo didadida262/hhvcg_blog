@@ -11,6 +11,10 @@ author: Hhvcg(旅途图)
 language: en
 timezone: ''
 
+# 文章权限
+auth:
+  enable: true
+  password: 123456
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
 url: http://example.com

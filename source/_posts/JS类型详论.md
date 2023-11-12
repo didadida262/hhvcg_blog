@@ -4,15 +4,16 @@ category: 大前端气宗专栏
 date: 2023-08-03 14:47:06
 tags:
 ---
-**本文主旨： 极尽一切可能的，详细介绍js类型相关内容**
 
-### 主要数据类型两类
+### 本文主旨： 极尽一切可能的，详细介绍js类型相关内容
+
+#### 主要数据类型两类
 - 基本类型： 变量存储值
 数字、布尔、undefined、null、字符串、Symbol
 - 引用类型：变量存储地址，类似于c语言中的指针
 函数、数组、对象
 
-### 判断数据类型
+#### 判断数据类型
 1. typeof： 能够判断除了null和数组的所有数据类型
 ```javascript
 console.log(typeof 'a')
@@ -182,6 +183,7 @@ const deepClone = (obj) => {
     const res = {}
     for (let key in obj) {
         if (!obj.hasOwnProperty(key)) continue
+        // 还有Date、正则等特殊类型
         if (Array.isArray(obj[key])) {
             res[key] = obj[key].map((item) => {
                 if (typeof item === 'object') {

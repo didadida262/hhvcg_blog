@@ -8,11 +8,9 @@ category: Webpack系列
 
 1. **productionSourceMap: false**
    禁止生成map文件
-
 2. **关闭prefetch**
 3. **路由懒加载**
    匹配到的时候，再去import
-
 4. **elementui组件库按需加载**
 5. **CDN**
 6. **gzip压缩代码，compressionPlugin**

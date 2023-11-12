@@ -77,4 +77,4 @@ console.log(obj.name)
 #### 阶段四：ES6 Module终极方案
 大家应该都很熟悉了，就不举例了
 
-那么为什么webpack系列文章，要提一提前端模块的发展史呢？原因在于，注意阶段三的IIFE实现的模块机制。大家可以留意一下webpack打包出来的bundle.js代码，**尽管很乱但是，重点在于，webpack的打包js产物，实质就是一个IIFE。**
+那么为什么webpack系列文章，要提一提前端模块的发展史呢？`原因在于`，注意阶段三的`IIFE`实现的模块机制。大家可以留意一下webpack打包出来的bundle.js代码，**尽管很乱但是，重点在于，webpack的打包js产物，实质就是一个IIFE。**

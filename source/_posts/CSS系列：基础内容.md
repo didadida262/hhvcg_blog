@@ -1,7 +1,8 @@
 ---
-title: css基础内容概括
+title: CSS系列：基础内容
 date: 2023-09-06 22:22:00
-category: 大前端气宗专栏
+category: Css专栏
+
 ---
 
 1. **页面视图相关**

@@ -5,7 +5,7 @@ category: 大前端气宗专栏
 ---
 
 ### 本文纯属ts的内容备忘录
-**ts能干嘛？**类型注解，将弱类型的js，变为强类型的语言。
+**ts能干嘛？**将弱类型的js，变为强类型的语言。
 举例:
 ```javascript
 const fn = (str: string) => {
@@ -111,4 +111,33 @@ class Student extends Person {
         super.say()
     }
 }
+```
+6. 类型注解和编译时的类型检查
+7. type
+```javascript
+type some = number | string
+const x: some = 1
+```
+其与借口的区别，后者只能够定义对象类型，而前者除了对象类型，还能用来定义交叉、联合类型等
+
+**同js的区别**
+
+增加了新的数据类型： 
+any： 任意类型
+void：没有返回值，例如函数
+enum：
+```javascript
+enum Color { red, green, blue }
+const x: Color = Color.red
+```
+never: 通常用来声明错误
+```javascript
+let a:never
+a = (() => {
+    throw new Error('err)
+})()
+```
+tuple:
+```javascript
+const arr: [string, boolean] = ['asd', true]
 ```

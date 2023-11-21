@@ -72,6 +72,7 @@ const f = function(name) {
 const child = new f('hhvcg')
 console.log(child.name)
 ```
+- apply、call。给的谁，指向谁
 
 ### 闭包的那些个事儿
 **以最经典的防抖和节流功能为例。**

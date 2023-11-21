@@ -13,4 +13,4 @@ category: Webpack系列
 1. 初次打包： 编译打包，生成bundle.js，然后开启一个静态资源服务器，根据对应的地址打开页面
 2. 开启热更新时改动代码：webpack重新编译 > 根据变化的内容生成俩文件：manifest.js及chunk.js，通过HMRserver主动推送给浏览器（本质一个websocket通信），浏览器根据manifest.js文件获取变化的内容，重新render。
 
-注： bundlejs中厨了自己写的模块代码，还包含了HMR-runtime
+注： bundlejs中除了自己写的模块代码，还包含了HMR-runtime

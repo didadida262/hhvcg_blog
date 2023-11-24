@@ -68,4 +68,10 @@ uv有自己的坐标系规则，右x正上y正，几个点数据的分别对应�
     geometry.attributes.uv = new THREE.BufferAttribute(uv, 2)
     const cube = new THREE.Mesh(geometry, mesh)
 ```
-   
+偏移前：
+<img src="/img/uv偏移1.gif" alt="图片描述">
+
+偏移后：
+<img src="/img/uv偏移2.gif" alt="图片描述">
+
+

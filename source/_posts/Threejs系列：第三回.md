@@ -45,6 +45,22 @@ cube.position.x = 1
 <img src="/img/threejs3_2.jpg" alt="图片描述">
 <img src="/img/threejs3_3.jpg" alt="图片描述">
 
+**纹理又分为了map和envMap，后者就是环境纹理**
+如下方式添加：
+```javascript
+const path = './';
+const format = '.jpg';
+const urls = [
+  path + 'earth' + format, path + 'earth' + format,
+  path + 'earth' + format, path + 'earth' + format,
+  path + 'earth' + format, path + 'earth' + format
+];
+const textureCube = new THREE.CubeTextureLoader().load( urls );
+scene.background = textureCube;
+```
+
+
+
 立马来了感觉是不是？（这里可以各种diy，发挥你们的而创造力）。在这里可以剧透一下，我们所看到的各种酷炫的3d效果，就俩字：**贴图**
 <img src="/img/threejs3_4.jpg" alt="图片描述">
 

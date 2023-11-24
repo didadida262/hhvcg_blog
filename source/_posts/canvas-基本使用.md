@@ -10,9 +10,14 @@ category: 前端游戏杂谈
 ```javascript
       c.beginPath()
       c.arc(300, 200, 100, 0, 2 * Math.PI)
+      const g = c.createLinearGradient(0, 0, 600, 400)
+      g.addColorStop(0, 'green')
+      g.addColorStop(1, 'red')
+      c.fillStyle = g
+      c.fill()
       c.stroke()
       c.closePath()
-
+      
       c.beginPath()
       c.arc(250, 150, 20, 0, 2 * Math.PI)
       c.stroke()

@@ -42,7 +42,66 @@ scene.add(gridHelper)
 
 <img src="/img/threejs2_2.gif" alt="图片描述">
 
-4. 导入用第三方建模软件如blender等制作的模型
+4. dat库的使用
+  ```javascript
+
+  import * as dat from 'dat.gui'
+  // ...
+  // ...
+  // 配置gui
+  const gui = new dat.GUI()
+  // datGUI
+  gui.add(cube.position, "x")
+    .min(0)
+    .max(10)
+    .step(0.01)
+    .name('移动x')
+    .onChange((val) => {
+    })
+    .onFinishChange((val) => {
+    })
+  gui.add(cube.position, "y")
+    .min(0)
+    .max(10)
+    .step(0.01)
+    .name('移动y')
+    .onChange((val) => {
+    })
+    .onFinishChange((val) => {
+      // 防抖版本...
+    })
+  gui.add(cube.position, "z")
+    .min(0)
+    .max(10)
+    .step(0.01)
+    .name('移动z')
+    .onChange((val) => {
+    })
+    .onFinishChange((val) => {
+      // 防抖版本...
+    })
+  const params = {
+    color: '#000000',
+    fn: () => {
+      gsap.to(cube.position, { x: 5, duration: 2, yoyo: true, repeat: -1})
+    }
+  }
+
+
+  gui.add(cube, "visible").name('show')
+  // add fn
+  gui.add(params, "fn").name("run") 
+  // set folder
+  const folder = gui.addFolder("设置立方体")
+  folder.add(cube.material, "wireframe")
+  folder.addColor(params, "color")
+    .onChange((val) => {
+      cube.material.color.set(val)
+    })
+
+  ```
+
+5. 导入用第三方建模软件如blender等制作的模型
 用过懂车帝的同学都应该看过，懂车帝的3d炫酷的车模型。那么那样的东西，是如何实现的呢？准确的疑问描述：我们怎么在页面端或者手机的app上，实现那么炫酷的东西呢？
 <img src="/img/threejs2_3.webp" alt="图片描述">
 

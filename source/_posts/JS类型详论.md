@@ -139,7 +139,7 @@ console.log('constructor' in obj)
 ```
 
 ### js的深拷贝与浅拷贝
-这个话题是因为引用类型触发的。所谓深拷贝，就是完全复制，而浅拷贝，可以理解为一枚硬币的正反两面，无论是正面还是反面，指定对象都是这枚硬币。
+这个话题是因为引用类型触发的。所谓深拷贝，就是完全复制，而浅拷贝，是创建一个新的对象或者数组，新对象或者新数组与原对象或者数组的引用相同。
 直接上代码：
 ```javascript
 
@@ -152,30 +152,17 @@ const obj = {
 }
 
 // 浅拷贝
-// 方1
-// const obj2 = {
-//     ...obj
-// }
-
-// obj2.b.x = 10
-// console.log(obj)
-// { a: 100, b: { x: 10 }, c: [ 1, 2, 3, 4 ] }
-
-// 方2
-
-const clone = (obj) => {
-    const res = {}
-    for (let key in obj) {
-        if (!obj.hasOwnProperty(key)) continue
-        res[key] = obj[key]
-    }
-    return res
+方1 扩展运算符号
+const obj2 = {
+    ...obj
 }
 
-// const res = clone(obj)
-// res.b.x = 5555555555
-// console.log('obj', obj)
-// obj { a: 100, b: { x: 5555555555 }, c: [ 1, 2, 3, 4 ] }
+obj2.b.x = 10
+console.log(obj)
+{ a: 100, b: { x: 10 }, c: [ 1, 2, 3, 4 ] }
+
+// 方2
+const shallowCopy = Object.assign({}, originalObject);
 
 
 // 深拷贝

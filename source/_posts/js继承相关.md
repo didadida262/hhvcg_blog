@@ -68,7 +68,7 @@ child1.getChildren()
 
 
 #### 3. 组合继承
-利用原型链继承获得父类上的方法，通过构造函数继承实例化私有属性
+**利用原型链继承获得父类原型对象上的方法，通过构造函数继承实例化私有属性**
 ```javascript
     const Parent = function(){
         this.children = ['son1', 'son2']

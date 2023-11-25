@@ -92,7 +92,7 @@ child1.getChildren()
 1.通过打印发现实例的构造函数不是Children，而是Parent
 2.调用两次Parent，据说影响性能
 
-#### 4.组合继承改进版本
+#### 4.组合继承改进版本--寄生继承
 ```javascript
     const Parent = function(){
         this.children = ['son1', 'son2']

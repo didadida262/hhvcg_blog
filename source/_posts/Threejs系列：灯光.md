@@ -62,5 +62,30 @@ category: 前端三维系列
 最终效果如下：
 <img src="/img/threejs_阴影.gif" alt="图片描述">
 
+
+5. **针对导入的模型进行处理**
+```javascript
+    const dracoLoader = new DRACOLoader()
+    dracoLoader.preload()
+    dracoLoader.setDecoderPath("./draco/")
+    loader.setDRACOLoader(dracoLoader)
+    loader.load("Pistol_Model.glb", function(gltf) {
+    console.log('success!!!')
+    const air = gltf.scene
+    console.log(air)
+    air.position.set(2,3,2)
+    air.traverse((child) => {
+        if (child.name === 'Pistol_Hammer') {
+        child.receiveShadow = true
+        child.castShadow = true
+        console.log('我是收起')
+        }
+    })
+    scene.add(air)
+    })
+```
+在加载成功的回调中，通过traverse获取目标物体，设置阴影。
+<img src="/img/threejs_pis2.gif" alt="图片描述">
+
 文毕。
 

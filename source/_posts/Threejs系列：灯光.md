@@ -5,6 +5,7 @@ category: 前端三维系列
 ---
 
 ### 本文介绍threejs中的灯光相关设置
+threejs中的光照配置的标配： **环境光 + 光源**
 <img src="/img/threejs_灯光.png" alt="图片描述">
 
 1. **环境光： 无处不在的光**

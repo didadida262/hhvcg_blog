@@ -127,29 +127,7 @@ let x = new String('123')
 事实上，通过本文上面的知识，这种情况我们已经能够解释，因为obj是一个对象，可以看成是指针，把这个对象通过参数传递出去，在change中做的改变就是改变的原来的obj，因为不管change定义的参数名是啥，他都是跟obj一样的指针，指向的是同一个数据。
 **但是，我必须说但是，这种骚操作，实在让我暂时无法接受。我想，学过c/c++或者其他主流语言的同学，看到这一幕，可能会一脸懵逼吧。。。这个东西类似于c语言中的指针，但是，也太随便了。**
 
-
-10. **Map和WeakMap**
-这俩得单独拿出来说一说
-- `Map`: 键值集合
-  跟object差不多，打印出来就是一个对象，使用层面的区别在于，object的键只能是字符串、数字和符号，而Map可以是任意类型。工程级别的应用区别在于`性能`.首先`内存方面`，给定固定大小的内存，Map能够比object多存储50%的键值对。其次`插入、查找、删除`操作性能都优于object。
-  
-- `WeakMap`: Map的二弟
-  与Map的区别在于这个Weak（弱）字儿，这种映射结构表示键是`弱弱的拿着`, 就是只要键不存在任何引用，就会被垃圾回收。其键只能是Object类型。没看懂？举个栗子：
-
-  ```javascript
-  const map = new Map()
-  const dom = document.getElementById('#test')
-  map.set(dom, { adisabled: true})
-
-  const wmap = new WeakMap()
-  const dom = document.getElementById('#test')
-  wmap.set(dom, { adisabled: true})
-
-  ```
-  上面代码中，对于map而言，即使dom被删除了，map中依旧保留着数据，而对于wmap而言，一旦dom被删除没有任何其他地方引用，wmap中的内存就会立即释放。
-
-
-11.   最后一点补充： 对象的属性值判断方法。
+10.   最后一点补充： 对象的属性值判断方法。
 
 in和hasOwnProperty都可以用来判断一个属性是否在对象中存在但是，前者能够判断自有属性和原型属性，而后者，只专注于自有属性。所以，hasOwnProperty更加的专业。自行测试下面代码。
 ```javascript

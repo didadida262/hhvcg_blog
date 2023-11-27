@@ -50,3 +50,58 @@ const proxyUser = new Proxy(user, {
 })
 ```
 这里需要分清楚两个概念，上面代码中的目标对象user，和代理对象proxyUser，代理对象的改动就是改动目标对象。使用proxy对目标对象的内部数据劫持，并通过reflect操作对象的内部数据。
+
+- 7. **生成器Generator**
+直接说就是一种能够暂停、继续执行的函数。
+```javascript
+function* gen() {
+    yield 'hello'
+    yield 'hhvcg'
+    return 'last'
+}
+
+const res = gen()
+console.log(res.next())
+console.log(res.next())
+console.log(res.next())
+console.log(res.next())
+
+// 输出
+{ value: 'hello', done: false }
+{ value: 'hhvcg', done: false }
+{ value: 'last', done: true }
+{ value: undefined, done: true }
+
+```
+通过next执行，遇到yield停止。
+
+**具体应用：**每隔一秒输出一个数字
+- `定时器`
+```javascript
+// 每隔一秒输出一个数字
+
+const f = () => {
+    let i = 0
+    setInterval(() => {
+        console.log(i)
+        i++
+    }, 1000)
+}
+
+f()
+
+- `generator`
+function* printNumber() {
+    let count = 0
+    while (true) {
+        count++
+        yield count
+    }
+}
+
+const iterator = printNumber()
+setInterval(() => {
+    const { value, done } = iterator.next()
+    console.log(value)
+}, 1000)
+```

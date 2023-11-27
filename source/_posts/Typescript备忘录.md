@@ -118,7 +118,7 @@ class Student extends Person {
 type some = number | string
 const x: some = 1
 ```
-其与借口的区别，后者只能够定义对象类型，而前者除了对象类型，还能用来定义交叉、联合类型等
+其与接口的区别，后者只能够定义对象类型，而前者除了对象类型，还能用来定义交叉、联合类型等
 
 **同js的区别**
 

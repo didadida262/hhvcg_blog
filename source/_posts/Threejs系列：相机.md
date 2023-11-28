@@ -6,7 +6,7 @@ category: 前端三维系列
 
 ### 本文主要研究一下threejs中的相机
 
-threejs中有三种相机： `透视相机-PerspectiveCamera、立体相机、正交相机`
+threejs中的相机：
 - `ArrayCamera`：包含着一组子摄像机，常用于多人同屏的渲染，更好地提升VR场景的渲染性能
 - `StereoCamera`：双透视摄像机（立体相机），常用于创建 3D 立体影像，比如 3D 电影之类或 VR
 - `CubeCamera`：有6个渲染，分别是立方体的6个面，常用于渲染环境、反光等
@@ -30,7 +30,7 @@ camera.position.z = 10;
 透视视角：
 <img src="/img/threejs_camera_透视.png" alt="parser">
 
-2. **正交相机**
+1. **正交相机**
 语法：`OrthographicCamera( left, right, top, bottom, near, far )`
 `left`：摄像机视锥体左侧面。
 `right`：摄像机视锥体右侧面。
@@ -51,6 +51,6 @@ scene.add( camera );
 正交视角：
 <img src="/img/threejs_camera_正交.png" alt="parser">
 
-**透视相机和正交的区别：牵着模拟人眼观察的效果，用于相机漫游等场景，后者通常用于全图总览等场景**
+**透视相机和正交的区别：前者模拟人眼观察的效果，用于相机漫游等场景，后者通常用于全图总览等场景**
 
 <!-- 相机观察点：lookAt() -->

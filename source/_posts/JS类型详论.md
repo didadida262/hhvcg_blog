@@ -152,7 +152,7 @@ const obj = {
 }
 
 // 浅拷贝
-方1 扩展运算符号
+// 方1 扩展运算符号
 const obj2 = {
     ...obj
 }
@@ -174,13 +174,21 @@ const deepClone = (obj) => {
         if (Array.isArray(obj[key])) {
             res[key] = obj[key].map((item) => {
                 if (typeof item === 'object') {
-                    return deepClone(item)
+                    if (!obj[key]) {
+                        return null
+                    } else {
+                        return deepClone(item)
+                    }
                 } else {
                     return item
                 }
             })
         } else if (typeof obj[key] === 'object') {
-            res[key] = deepClone(obj[key])
+            if (!obj[key]) {
+                res[key] = null
+            } else {
+                res[key] = deepClone(obj[key])
+            }
         } else {
             res[key] = obj[key]
         }

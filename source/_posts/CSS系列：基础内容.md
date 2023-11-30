@@ -26,85 +26,8 @@ category: Css专栏
 2. **rem和em。**
    rem是相对于根元素（html）的font-size属性进行设置的，如果body的font-size:16px;那么，在指定任何元素的px时，1rem就是16px；em和其类似，只不过，em是相对于其父元素的。一般的pc端默认font-size为16px。
 
-3. **盒子水平垂直居中几种方案**
- - 3.1 flex
-  ```html
-    <div class="father">
-      <div class="child"></div>
-    </div>
-  ```
-  ```css
-        .father {
-            margin: 100px auto;
-            width: 1000px;
-            height: 500px;
-            border: 1px solid red;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .child {
-            border: 1px solid green;
-            width: 500px;
-            height: 100px;
-        }
-  ```
-  - 3.2 定位
-    ```css
-        .father {
-            margin: 100px auto;
-            width: 1000px;
-            height: 500px;
-            border: 1px solid red;
-            position: relative;
-        }
-        .child {
-            border: 1px solid green;
-            width: 500px;
-            height: 100px;
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-        }
-    ```
 
-  - 3.3 display: table-cell
-    ```css
-          .father {
-            margin: 100px auto;
-            width: 1000px;
-            height: 500px;
-            border: 1px solid red;
-            display: table-cell;
-            text-align: center;
-            vertical-align: middle;
-        }
-        .child {
-            display: inline-block;
-            border: 1px solid green;
-            width: 500px;
-            height: 100px;
-        }
-    ```
-  - 3.4 marign
-    ```css
-        .father {
-            margin: 100px auto;
-            width: 1000px;
-            height: 500px;
-            border: 1px solid red;
-        }
-        .child {
-            border: 1px solid green;
-            width: 500px;
-            height: 100px;
-            margin-top: 200px;
-            margin-left: 250px;
-        }
-    ```
-
-4. **mixin**
+3. **mixin**
 这玩意类似于c语言中的宏，对，就是那个#define那玩意儿。
 ```css
     @mixin left($value: 10px) {
@@ -122,7 +45,7 @@ category: Css专栏
 ```
 这种方式，将css这门语言，在某种程度上，变成了稍微正规点的代码语言。
 
-5. **animation**
+4. **animation**
    自己曾经做过一个音乐播放器的组件，其中，当歌曲播放的时候，中间的大logo需要有一个旋转的效果，该功能，就用到了animation。
    ```css
        /* logo图标设置 */
@@ -145,4 +68,8 @@ category: Css专栏
    我们只需要给img标签，绑定一个logo的样式。然后设置样式的animation属性即可。其中需要给出动画名称，通过@keyframes定义即可。在上面的代码中，我们给animation属性绑定了一个App-logo-spin名称的动画。那么这个动画具体做了啥呢？很简单清晰，从0度旋转到360度。根据animation中的设定可知，该动画是无限循环的，同时20s完成一个动画周期.
 <img src="/img/css1_1.jpg" alt="">
 
+5. **盒子模型**
+   - 标准盒模型（默认）： content-box
+   - 怪异模型： border-box
+  box-sizing确定
 **文毕。**

@@ -6,6 +6,7 @@ tags:
 ---
 
 **本文开始，我们尝试着实现一个自个儿的vue框架（简陋版本）。**
+其基本功能： `数据变化，更新视图，视图变化，改变数据。(MVVM中的VM做的事情)`
 
 1. 首先我们的页面结构如下：
 ```javascript
@@ -17,8 +18,6 @@ tags:
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My_vue</title>
 </head>
-<script src="./Compile.js"></script>
-<script src="./Myvue.js"></script>
 <body>
     <div id="app">
         <input type="text" v-model="msg">
@@ -43,27 +42,78 @@ tags:
 <img src="/img/vue_basic_1.jpg" alt="主页面结构" width="500">
 
 其中输入框通过v-model绑定变量msg，另一个文本绑定了info。可为什么原样显示呢？废话，应为我们还啥都没做。目前的Myvue代码如下：
+```html
+<script src="./Compile.js"></script>
+```
+
 ```javascript
 class MyVue {
     constructor(vm) {
         this.vm = vm
         this.$data = vm.data
         this.$el = document.querySelector(vm.el)
-        new Compile(this)
+        // new Compile(this)
     }
 }
 ```
 Myvue就是一个class类，其中拥有三个属性，vm，当前myvue的实例，更直白的将就是描述当前组件的那个入参对象；$data: 设置的各个变量；$el: 绑定的div的dom节点。
-vue框架的做的第一件事情，就是页面渲染完成后，能够将其中的变量msg和info变成我们设置的值，而不是上面那副模样。这个过程，就是**模板编译**。即：**能自动的将html代码中的变量，变成对应的值**。比如我们预先定义的msg应该显示为hello,还能对v-model这样的指令进行解析，让input的value变成对应变量的值...
-注释：前端领域的**编译**和我们传统的计算机专业内定义的**编译**有些不同，但是内核精神是一致的。写过c或者java都知道，我们写的程序是一套代码，但是这套代码机器无法直接运行，因为机器只能执行二进制，此处概念的理解可以去看看《编码》这本书，他会告诉你，**cpu的本质，之际就是继电器。**回过头来，因为机器看不懂我们人类系的代码，所以需要**编译器**这个中介，将我们写的这一套代码，转换成机器能够执行的二进制代码。而前端领域中的**模板编译**，指的是将如上图中，页面绑定的各个变量，转换成其真实的值。顺带提一句，webpack中的各种loader也可以看成是各种编译器，如babel-loader，因为浏览器看不懂es6及其之后版本的js代码，那么babel-loader的作用就是转换之。但是总的来说，本质的精神内核是一致的：**自动转换**。
 
-#### 实现我们的编译器Compile函数，完成模板编译工作。
-具体的思路很清晰，就是找出存在msg或者info这样的变量所在的地方，然后用我们vue实例对象mv的data中的数据更新。
-首先在html文件中引入一个单独的Compile.js文件:
+至此，我们有了基本的页面结构，和最最基础的myvue类，接下来正式开始我们的需求。
+
+#### 一. 监听：Obsever。将数据变成响应式的数据，就是get和set时我们能够知道
+```javascript
+<script src="./Myvue.js"></script>
+<script src="./Obsever.js"></script>
+```
+```javascript
+class MyVue {
+    constructor(vm) {
+        ...
+        ...
+        new Obsever(this)
+        ...
+        ...
+
+}
+class Obsever {
+    constructor(vm) {
+        this.vm = vm
+        this.data = vm.$data
+        this.obsever()
+    }
+    obsever() {
+        // const dep = new Dep()
+        for (let key in this.data) {
+            let val = this.data[key]
+            Object.defineProperty(this.data, key, {
+                enumerable: true,
+                get() {
+                    // Dep.target && dep.addSub(Dep.target)
+                    console.log('搜集依赖')
+                    return val
+                },
+                set(newVal) {
+                    console.log('触发依赖')
+                    val = newVal
+                    // dep.notify()
+                }
+            })
+        }
+    }
+}
+```
+从代码中可知， 我们在Obsever类中，存储了vm和data，然后触发`obsever`函数。他做的事情很清晰，通过`Object.defineProperty`api自定义了一下`set和get`内部做的事情。就是说此刻，对于存储在data中的变量，对他们的使用及改变的`时机`，我们都能够捕捉到。
+
+<img src="/img/vuejs_observe.gif" alt="">
+
+**从图中能够看到，当我们访问或者改变变量时，均捕捉到了其变化，完成对数据响应化的处理**
+
+#### 二. 编译模板:Compiler。
+对模板代码解析编译，找到其中动态绑定的数据，从data中获取更新视图。
+Compile也是一个类。入参为当前的实例对象mv。具体代码如下：
 ```html
 <script src="./Compile.js"></script>
 ```
-Compile也是一个类。入参为当前的实例对象mv。具体代码如下：
 ```javascript
 //  什么叫编译模板--->把template变成dom，如{{变量}}--->真实的数据
 
@@ -88,7 +138,6 @@ class Compile {
             } else if (nType === 1) {
                 this.compileElement(node)
                 // 元素节点
-                
             }
             if (node.childNodes && node.childNodes !== 0) {
                 this.compile(node)
@@ -127,9 +176,8 @@ class Compile {
     }
 }
 ```
-逐一解释：
-- 1. 两个属性：vm绑定实例mv，el绑定真实的dom。初始化时通过nodeToFragment方法拿到了一个输出，然后调用compile方法，其结果的输出直接被覆盖式的添加到了el中，完成编译工作。
-- 2. **nodeToFragment做了啥？**
+总体逻辑：**根据当前vm的$el, 创建一个`fragment`, 编译之，然后appendChild回真实dom，完成编译。**
+- 1. **nodeToFragment做了啥？**
 ```javascript
     nodeToFragment() {
         const f = document.createDocumentFragment()
@@ -139,8 +187,9 @@ class Compile {
         return f
     }
 ```
-创建了一个文档片段，然后自毁式遍历当前的el的儿子元素，依次添加到了文档片段f中。这里需要解释的一点是，当我们将el.firstChild添加到f中后，el的firstChild会变成之前的第二个，以此类推所以称之为自毁。但是呢，dom被添加到f中后，此时页面只会少不会增。可以理解为我们暂时性的找了个盒子，专门用来存放这些真实的dom。所以nodeToFragment函数的作用，就是把所有的真实儿子节点给到了文档片段f。然后以其作为输入，调用compile。
-- 3. **compile干了啥？找出所有的data中的变量**
+创建了一个文档片段，然后`自毁式遍历`当前的el的儿子元素，依次添加到了`文档片段f`中。这里需要解释的一点是，当我们将el.firstChild添加到f中后，el的firstChild会变成之前的第二个，以此类推所以称之为自毁。但是呢，dom被添加到f中后，此时页面只会少不会增。可以理解为我们暂时性的找了个盒子，专门用来存放这些真实的dom。所以nodeToFragment函数的作用，就是把所有的真实儿子节点给到了文档片段f。然后以其作为输入，调用`compile`。
+
+- 2. **compile干了啥？找出所有的data中的变量**
 ```javascript
     // 解析出{{}},变量赋值
     compile(fragment) {
@@ -170,7 +219,7 @@ class Compile {
         if(reg.test(con)) {
             console.log(node)
             const newVal = con.replace(reg, (...arg) => {
-                return this.vm.$data[arg[1]]
+                return this.vm.$data[arg[1].trim()]
             })
             node.textContent = newVal
         }
@@ -193,11 +242,126 @@ class Compile {
         }
     }
 ```
-对元素节点的解析是为了处理像v-model这样的自定应属性。通过attributes属性获取该元素的所有属性。找到v-model对应的变量名，然后改写node.value完成元素节点的变量--->值的页面赋值。
+对元素节点的解析是为了处理像`v-model`这样的自定应属性。通过attributes属性获取该元素的所有属性。找到v-model对应的变量名，然后改写node.value.`完成元素节点的变量--->值的页面赋值。`
 
-- 4. **将文档片段直接塞入容器dom---el。更新页面中的所有绑定变量数据，完成模板解析。**
+- 3. **将文档片段直接塞入容器dom---el。更新页面中的所有绑定变量数据，完成模板解析。**
 ```javascript
 this.vm.$el.appendChild(fragment)
 ```
+<img src="/img/vue_basic_2.png" alt="插入文档片段，完成编译">
 
-<img src="/img/vue_basic_2.png" alt="插入文档片段，完成编译" width="500">
+至此，我们完成了第二步：**模板解析**.
+
+**但是此时，当我们尝试改变数据时，视图并没有更新，改变视图时，数据也并没有更新。**
+
+<img src="/img/vue_basic_3.gif" alt="" >
+
+没反应，属正常现象。因为我们还没做完。
+
+简单捋一下： 目前已经通过`Observer`把数据变成响应式的了，然后`Compiler`完成了模板编译。接下来要做的事情就很清晰了：
+- `改变数据时，重新编译模板`
+- `改变视图数据时，更新数据。`
+
+#### Watcher和Dep登场
+
+首先注意一个细节，现阶段代码情况下，打开控制台发现了如下打印：
+<img src="/img/vue_basic_4.png" alt="" >
+
+发现控制台显示了三个`搜集依赖`, 为什么？`因为当我们解析模板时，取了data中的三个变量去赋值dom内容了对吧。也就是说，在模板解析阶段，凡是用到了变量的地儿，都能够触发对应变量的get。`那么如果解析时触发get存储一个回调函数（再执行一遍编译的操作），然后当我们改变变量值的的时候，调用一下回调不就实现data-->视图的更新了吗？
+
+改写编译函数：
+```javascript
+    compileText(node) {
+        const con = node.textContent
+        const reg = /\{\{(.+?)\}\}/g
+        if(reg.test(con)) {
+            const newVal = con.replace(reg, (...arg) => {
+                // arg[1]就是data中的变量名，此处为msg、info
+                new Watcher(this.vm, arg[1].trim(), () => {
+                    const xx = con.replace(reg, (...arg) => {
+                        return this.vm.$data[arg[1].trim()]
+                     })
+                    node.textContent = xx
+                })
+                return this.vm.$data[arg[1].trim()]
+            })
+            node.textContent = newVal
+        }
+    }
+```
+`watcher类如下：`
+```javascript
+<script src="./Watcher.js"></script>
+...
+...
+class Watcher {
+    constructor(vm, key, cb) {
+        this.vm = vm
+        this.cb = cb
+        this.oldVaL = this.getOldVal(key, vm)
+    }
+    getOldVal(key, vm) {
+        Dep.target = this
+        const oldVal = compileUtil.getValue(key, vm)
+        Dep.target = null
+        return oldVal
+    }
+    update() {
+        this.cb()
+    }
+}
+```
+注意页面中会有很多个watcher，所以我们另外准备了一个仓库Dep类的实例来统一管理这些watcher，实际就是一个数组。
+
+```javascript
+<script src="./Dep.js"></script>
+...
+...
+
+class Dep{
+    constructor() {
+        this.subList = []
+    }
+    addSub(watcher) {
+        console.log(watcher)
+        this.subList.push(watcher)
+    }
+    notify() {
+        console.log('当前的总wacther>>>', this.subList)
+        this.subList.forEach((sub) => {
+            sub.update()
+        })
+    }
+}
+```
+
+在编译模板时，注册一个Watcher类的实例，该实例初始化时会自动触发目标变量的get，在get中, 将当前的实例watcher添加到仓库中。那么下次改变数据的时候，会执行notify操作，该操作会遍历所有仓库中的watcher，执行`update`,也就是回调函数重新编译视图。
+
+```javascript
+    obsever() {
+        const dep = new Dep()
+        for (let key in this.data) {
+            let val = this.data[key]
+            Object.defineProperty(this.data, key, {
+                enumerable: true,
+                get() {
+                    Dep.target && dep.addSub(Dep.target)
+                    console.log('搜集依赖')
+                    return val
+                },
+                set(newVal) {
+                    console.log('触发依赖')
+                    val = newVal
+                    dep.notify()
+                }
+            })
+        }
+    }
+```
+
+<img src="/img/vue_basic_5.gif" alt="" >
+
+
+注释：前端领域的**编译**和我们传统的计算机专业内定义的**编译**有些不同，但是内核精神是一致的。写过c或者java都知道，我们写的程序是一套代码，但是这套代码机器无法直接运行，因为机器只能执行二进制，此处概念的理解可以去看看《编码》这本书，他会告诉你，**cpu的本质，实际就是继电器。**回过头来，因为机器看不懂我们人类系的代码，所以需要**编译器**这个中介，将我们写的这一套代码，转换成机器能够执行的二进制代码。而前端领域中的**模板编译**，指的是`将如上图中，页面绑定的各个变量，转换成其真实的值`。顺带提一句，webpack中的各种loader也可以看成是各种编译器，如babel-loader，因为浏览器看不懂es6及其之后版本的js代码，那么babel-loader的作用就是转换之。但是总的来说，本质的精神内核是一致的：**自动转换**。
+
+

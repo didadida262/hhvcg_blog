@@ -53,17 +53,17 @@ uv有自己的坐标系规则，右x正上y正，几个点数据的分别对应�
     // // 物体
     const geometry = new THREE.BoxGeometry(1, 1, 1);
     const mesh = new THREE.MeshPhongMaterial({
-    map: pi,
-    color: 0xffffff,
-    transparent:true,
-    side: THREE.DoubleSide
+        map: pi,
+        color: 0xffffff,
+        transparent:true,
+        side: THREE.DoubleSide
     })
     const uv = new Float32Array([
-    // 顺序： 
-    0, 0.5,
-    0.5, 0.5,
-    0, 0,
-    0.5, 0,
+        // 顺序： 
+        0, 0.5,
+        0.5, 0.5,
+        0, 0,
+        0.5, 0,
     ])
     geometry.attributes.uv = new THREE.BufferAttribute(uv, 2)
     const cube = new THREE.Mesh(geometry, mesh)

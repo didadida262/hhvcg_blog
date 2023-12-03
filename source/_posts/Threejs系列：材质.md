@@ -33,3 +33,33 @@ const material6 = new THREE.MeshBasicMaterial( {color: 'gray'} );
 const cube = new THREE.Mesh( geometry, [material1,material2,material3,material4,material5,material6 ] ); 
 ```
 <img src="/img/threejs_材质2.gif" alt="图片描述">
+
+**改动uv设置贴图**
+uv有自己的坐标系规则，右x正上y正，几个点数据的分别对应上左，上右，下左，下右
+```javascript
+    // // 物体
+    const geometry = new THREE.BoxGeometry(1, 1, 1);
+    const mesh = new THREE.MeshPhongMaterial({
+        map: pi,
+        color: 0xffffff,
+        transparent:true,
+        side: THREE.DoubleSide
+    })
+    const uv = new Float32Array([
+        // 顺序： 
+        0, 0.5,
+        0.5, 0.5,
+        0, 0,
+        0.5, 0,
+    ])
+    geometry.attributes.uv = new THREE.BufferAttribute(uv, 2)
+    const cube = new THREE.Mesh(geometry, mesh)
+```
+偏移前：
+<img src="/img/uv偏移1.gif" alt="图片描述">
+
+偏移后：
+<img src="/img/uv偏移2.gif" alt="图片描述">
+
+
+

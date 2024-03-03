@@ -6,7 +6,7 @@ category: 前端气宗专栏
 
  ### 本文主要是记录一些关于js的奇奇怪怪的特性，题目为主
 
-1. 原型链
+1. **原型链**
  ```javascript
 function F() {}
 Object.prototype.a = function() {
@@ -26,9 +26,35 @@ f.b()
 - 因为f首先是一个对象，通过原型链找到a方法输出a
 - 通过new方法出来的f，本质上是基于F构造函数的原型对象{}生成，所以无b方法
 
-2. 变量提升 
+2. **js中的代码，是按顺序执行的吗** 
 
 ```javascript
+// 事例1
+showName()
+console.log(myname)
+var myname = '极客时间'
+function showName() {
+    console.log('函数showName被执行');
+}
+// 输出
+// 函数showName被执行
+// undefined
+
+// 等价于：
+var myname
+function showName() {
+    console.log('函数showName被执行');
+}
+showName()
+console.log(myname)
+vmyname = '极客时间'
+
+```
+解释：函数和myname都会被提升，但是var的提升只是告诉你有这么个变量，至于具体什么值，需要赋值阶段才知道。
+
+
+```javascript
+// 事例2
 var name = 'World';
 (function() {
   if (typeof name === 'undefined') {
@@ -40,9 +66,9 @@ var name = 'World';
 })()
 // 输出结果：Goodbye Jack
 ```
-js中var和function存在变量提升。
+解释： 立即执行函数执行时，内部定义的name发生了变量声明的提升，单位定义。倘若内部没有**var name = 'Jack'**这种骚操作，就会获取到外部的name走else。 
 
-3. 异步
+3. **异步**
 ```javascript
 async function async1() {
   console.log('A')

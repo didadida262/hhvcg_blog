@@ -27,6 +27,7 @@ f.b()
 - 通过new方法出来的f，本质上是基于F构造函数的原型对象{}生成，所以无b方法
 
 2. **js中的代码，是按顺序执行的吗** 
+先说结论：作为单线程的语言，当然是一行行按顺序执行，但也并不完全是，为什么？因为有个叫变量提升的骚操作。
 
 ```javascript
 // 事例1
@@ -66,7 +67,42 @@ var name = 'World';
 })()
 // 输出结果：Goodbye Jack
 ```
-解释： 立即执行函数执行时，内部定义的name发生了变量声明的提升，单位定义。倘若内部没有**var name = 'Jack'**这种骚操作，就会获取到外部的name走else。 
+解释： 立即执行函数执行时，内部定义的name发生了变量声明的提升，单位定义。倘若内部没有```var name = 'Jack'```这种骚操作，就会获取到外部的name走else。 
+
+```javascript
+// 事例3
+function showName() {
+    console.log('极客邦');
+}
+showName();
+function showName() {
+    console.log('极客时间');
+}
+showName(); 
+// 输出：
+// 极客时间
+// 极客时间
+```
+解释：发生覆盖，以最新的为准。
+
+```javascript
+// 事例4
+showName()
+var showName = function() {
+    console.log(2)
+}
+function showName() {
+    console.log(1)
+}
+showName()
+```
+无需解释了吧。
+
+
+**所谓的变量提升，是指在JavaScript代码执行过程中，JavaScript引擎把变量的声明部分和函数的声明部分提升到代码开头的“行为”。变量被提升后，会给变量设置默认值，这个默认值就是我们熟悉的undefined。**
+
+
+
 
 3. **异步**
 ```javascript

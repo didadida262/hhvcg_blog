@@ -1,7 +1,8 @@
-var myname
+showName()
+var showName = function() {
+    console.log(2)
+}
 function showName() {
-    console.log('函数showName被执行');
+    console.log(1)
 }
 showName()
-console.log(myname)
-vmyname = '极客时间'

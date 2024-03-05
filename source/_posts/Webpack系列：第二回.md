@@ -1,5 +1,5 @@
 ---
-title: Webpack系列：第二回
+title: Webpack系列：第二回(前端模块化迭代史)
 category: Webpack系列
 date: 2023-07-24 22:23:35
 tags:

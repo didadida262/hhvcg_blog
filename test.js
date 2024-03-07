@@ -1,80 +1,46 @@
-// function Promise(fn) {
-//     var value = null,
-//         callbacks = [];  //callbacks为数组，因为可能同时有很多个回调
+function findRepeatStr(str) {
+    const arr = str.split('')
+    let max = 0
+    let target = null
+    for (let i = 0; i < arr.length - 1; i++) {
+      const curChar = arr[i]
+      let size = 0
 
-//     this.then = function (onFulfilled) {
-//         callbacks.push(onFulfilled);
-//     };
+    //   // 方案一
+    //   for (let j = i; j < arr.length; j++) {
+    //     if (arr[j] === curChar) {
+    //       size++
+    //     } else {
+    //       if (max < size) {
+    //         target = curChar
+    //         max = size
+    //         break
+    //       }
+    //     }
+    //   }
 
-//     function resolve(value) {
-//         callbacks.forEach(function (callback) {
-//             callback(value);
-//         });
-//     }
-
-//     fn(resolve);
-// }
-
-
-
-
-// const p = new Promise((resolve, reject) => {
-//     console.log('promise-start')
-//     resolve('asdasd')
-//     reject('xxx')
-// })
-
-// p.then((res) => {
-//     console.log('res>>', res)
-// })
-
-// p.catch((err) => {
-//     console.log('err>>', err)
-// })
-
-
-
-class MyPromise {
-    constructor(exector) {
-        this.initData()
-        this.initBind()
-        exector(this.resolve, this.reject)
+      // 方案二
+      const targetIndex = arr.slice(i).findIndex((item) => item !== curChar) + i + 1
+      if (targetIndex === -1) {
+        size = arr.length - i + 1
+      } else {
+        size = targetIndex - i - 1
+      }
+      
+      if (max < size) {
+        target = curChar
+        max = size
+      }
     }
-    initData() {
-        this.promiseResult = ''
-        this.promiseStatus = 'pending'
-    }
-    initBind () {
-        // 初始化this
-        this.resolve = this.resolve.bind(this)
-        this.reject = this.reject.bind(this)
-    }
-    resolve(data) {
-        if (this.promiseStatus === 'pending') {
-            this.promiseStatus = 'resolve'
-            this.promiseResult = data
-        }
-    }
-    reject(data) {
-        if (this.promiseStatus === 'pending') {
-            this.promiseStatus = 'reject'
-            this.promiseResult = data
-        }
-    }
-    then(callback) {
-        callback(this.promiseResult)
-    }
-    catch(callback) {
-        callback(this.promiseResult)
-    }
+
     
-}
-
-const p = new MyPromise((resolve, reject) => {
-    console.log('promise-start')
-    // resolve('asdasd')
-    reject('xxx')
-})
-p.then((res) => {
-    console.log('res>>>', res)
-})
+    console.log('max', max)
+    const start = arr.findIndex((item) => item === target)
+    return {
+      char: target,
+      startIndex: start,
+      endIndex: start + max - 1
+    }
+  }
+const str = 'abcdefggghhhhiiijjjj';
+console.log(findRepeatStr(str)); // 输出 {char: 'h', startIndex: 9, endIndex: 12}

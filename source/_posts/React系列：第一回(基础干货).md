@@ -1,5 +1,5 @@
 ---
-title: 'React: 第一回'
+title: 'React系列: 第一回(基础干货)'
 date: 2023-10-24 23:13:23
 category: React系列
 ---
@@ -7,18 +7,18 @@ category: React系列
 自本文开始，我们将逐步介绍react的必要概念，以备忘录。
 
 ### react带来了利？
-- 1. 组件化开发，声明式编码，提高开发效率及组建复用率。
-- 2. react-native中，使用js开发移动端应用
-- 3. 虚拟dom+优秀的diffing算法，尽量减少与真实dom的交互
+- 1. `组件化开发，声明式编码`，提高开发效率及组建复用率。
+- 2. react-native中，使用js开发`移动端应用`
+- 3. 虚拟dom+优秀的diff算法，尽量减少与真实dom的交互
 
 ### 基本介绍
 
-1. 基础原理
+1. **基础原理**
 React仅仅是一个UI库。官方对`React`的定义为：
 > 用于构建用户界面的 JavaScript 库。
 其根基思想就是 `数据驱动视图`
 
-2. jsx 语法
+2. **jsx语法**
 ```javascript
 const Example = () => {
   return (
@@ -44,7 +44,7 @@ const Example = () => {
   );
 }
 ```
-3. React 组件
+3. **React组件**
 ```javascript
 import React from 'react';
 import ReactDOM from 'react-dom/client';
@@ -73,7 +73,7 @@ root.render(
 
 export default App;
 ```
-上面的代码中，我们写了一盒函数组件，搭配ts定义了该组件的Props类型。
+上面的代码中，我们写了一个函数组件，搭配ts定义了该组件的Props类型。
 
 react中的组件有两种方式：`函数组件和类组件`，目前公司业务普遍选择前者。
 
@@ -169,7 +169,7 @@ export default App;
 实际就是一个计数器，点击++。但我们引入了新的内容 **useState**，说白了就是组件内部有了状态变量。useState就是所谓的 是 react hooks 中的一种。
 根据有无状态，组件可以分为两种：**简单组件（simple component） 和 有状态组件（stateful component）。**
 
-4. Hook
+4. **Hook**
 ```javascript
 import React, { useState } from 'react';
 function Example() {
@@ -185,7 +185,7 @@ function Example() {
   );
 }
 ```
-
+**useState**
 在这里，useState 就是一个 Hook （通过在函数组件里调用它来给组件添加一些内部 state。React 会在重复渲染时保留这个 state。useState 会返回一对值：**当前状态和一个让你更新它的函数**，你可以在事件处理函数中或其他一些地方调用这个函数。你可以简单把它理解成调用这个函数会更新 state 的状态，然后这组件重新渲染。（使用 State Hook里展示了一个对比 useState 和 this.state 的例子）。
 useState 唯一的参数就是初始 state。在上面的例子中，我们的计数器是从零开始的，所以初始 state 就是 0。值得注意的是，这里的 state 不一定要是一个对象，可以是任意值。这个初始 state 参数只有在第一次渲染时会被用到。
 
@@ -199,8 +199,10 @@ function ExampleWithManyStates() {
   // ...
 }
 ```
+`注意`:
+state的变量不能直接修改，这是规则
 
-再来看一下另一个hook：**useEffect**
+**useEffect**
 这个 hook 的核心作用就是在组件渲染完毕之后，你想做点别的事情（我们统一把这些别的事情称为“副作用”）。
 比如你想渲染完之后立即进行数据获取、事件订阅或者手动修改过 DOM，这些都是副作用，都可以在 useEffect 中执行。
 useEffect 就是一个 Effect Hook，给函数组件增加了操作副作用的能力。它跟 class 组件中的 componentDidMount(组件第一次渲染结束后触发)、componentDidUpdate（组件每次更新结束后触发） 和 componentWillUnmount（组件将要卸载的时候触发） 具有相同的用途，只不过被合并成了一个 API（链接：使用 Effect Hook里展示了 useEffect 和 clss 组件中这些生命周期的对比例子）。
@@ -249,4 +251,9 @@ function FriendStatusWithCounter(props) {
 需要注意的是，不管是什么样的 hook，react 规定我们必须把 hooks 写在函数的最外层，不能写在 ifelse 等条件语句当中，来确保 hooks 的执行顺序一致。
 
 注： 本文大量参考平台内部某同学的文章，请留意。
+
+
+5. **通信**
+   无关组件之间传值，context
+
 **文毕**

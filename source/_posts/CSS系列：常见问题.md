@@ -158,3 +158,6 @@ position: relative
     border-style: solid
 }
 ```
+
+9. flex
+- flex属性是flex-grow, flex-shrink 和 flex-basis的简写，默认值为0 1 auto。后两个属性可选。

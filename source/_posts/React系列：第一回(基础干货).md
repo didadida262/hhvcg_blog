@@ -170,6 +170,62 @@ export default App;
 根据有无状态，组件可以分为两种：**简单组件（simple component） 和 有状态组件（stateful component）。**
 
 4. **Hook**
+
+hook的本质，就是对逻辑的抽象。拿一个组件显隐的功能举例：
+
+原始版本：
+```javascript
+import React, { useState, useRef, useEffect } from 'react'
+import './style.css'
+interface IProps {
+  uids: Array<number>
+}
+
+export default function ComputerComponent(props: IProps) {
+  const [show, setshow] = useState(true)
+  const handleClick = () => {
+    setshow(!show)
+  }
+  return (<div>
+    { show && <div className='test'>我是div</div>}
+    <button onClick={handleClick}>toggle</button>
+  </div>) 
+}
+```
+效果：
+<img src="/img/react_hook1.gif" alt="图片描述">
+
+
+抽象化之后：
+```javascript
+import React, { useState, useRef, useEffect } from 'react'
+import './style.css'
+interface IProps {
+  uids: Array<number>
+}
+function useShow() {
+  const [show, setshow] = useState(true)
+  const handleClick = () => {
+    setshow(!show)
+  }
+  return {
+    show,
+    setshow,
+    handleClick
+  }
+}
+export default function ComputerComponent(props: IProps) {
+  const { show, handleClick, setshow } = useShow()
+  return (<div>
+    { show && <div className='test'>我是div</div>}
+    <button onClick={handleClick}>toggle</button>
+  </div>) 
+}
+```
+**这种抽象，就是自定义hook，下面介绍几个常用的官方hook**
+
+**useState**
+
 ```javascript
 import React, { useState } from 'react';
 function Example() {
@@ -185,7 +241,6 @@ function Example() {
   );
 }
 ```
-**useState**
 在这里，useState 就是一个 Hook （通过在函数组件里调用它来给组件添加一些内部 state。React 会在重复渲染时保留这个 state。useState 会返回一对值：**当前状态和一个让你更新它的函数**，你可以在事件处理函数中或其他一些地方调用这个函数。你可以简单把它理解成调用这个函数会更新 state 的状态，然后这组件重新渲染。（使用 State Hook里展示了一个对比 useState 和 this.state 的例子）。
 useState 唯一的参数就是初始 state。在上面的例子中，我们的计数器是从零开始的，所以初始 state 就是 0。值得注意的是，这里的 state 不一定要是一个对象，可以是任意值。这个初始 state 参数只有在第一次渲染时会被用到。
 
@@ -249,6 +304,7 @@ function FriendStatusWithCounter(props) {
 ```
 当然，除了上面上面的几个 hook，开发中常用的 hook 还有其他的，如 useContext、useReducer、useCallback、useMemo等，文本就不在挨个展开，大家可以自行学习了解。
 需要注意的是，不管是什么样的 hook，react 规定我们必须把 hooks 写在函数的最外层，不能写在 ifelse 等条件语句当中，来确保 hooks 的执行顺序一致。
+
 
 注： 本文大量参考平台内部某同学的文章，请留意。
 

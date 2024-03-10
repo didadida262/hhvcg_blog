@@ -256,5 +256,44 @@ export default HomeComponent
 <img src="/img/react-router6.png" alt="">
 
 
+#### 五. 高阶组件配合token控制跳转
+实现逻辑： 有token，正常跳转，无token，跳转到登录
+
+```javascript
+import { getToken } from '../utils/token';
+import { Navigate } from 'react-router-dom';
+
+
+const AuthRoute = ({ children}) => {
+    const token = getToken()
+    if (token) {
+        return <>{children}</>
+    } else {
+        return <Navigate to='/login' replace />
+    }
+}
+
+export default AuthRoute
+
+
+// router.index
+
+  {
+    path: '/',
+    element: <AuthRoute><LayoutComponent/></AuthRoute>,
+    children: [
+      {
+        index: true,
+        element: <HomeComponent/>
+      },
+      {
+        path: 'about',
+        element: <AboutComponent/>
+      },
+    ]
+  },
+```
+
+完毕
 
 

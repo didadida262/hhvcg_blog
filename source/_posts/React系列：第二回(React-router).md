@@ -301,4 +301,21 @@ cnpm install -g serve
 serve -s build
 ```
 
+#### 七. 路由懒加载
+
+```javascript
+// 路由懒加载
+const About = lazy(() => import('../pages/About'))
+...
+...
+// Suspense包裹
+{
+  path: 'about',
+  element: <Suspense fallback={'加载中'}><About/></Suspense>
+},
+```
+
+效果如下：
+<img src="/img/react-router7.gif" alt="">
+
 

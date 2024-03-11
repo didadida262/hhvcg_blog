@@ -294,6 +294,11 @@ export default AuthRoute
   },
 ```
 
-完毕
+#### 六. 本地模拟服务，查看build产物
+```javascript
+cnpm install -g serve
+
+serve -s build
+```
 
 

@@ -247,6 +247,11 @@ function FriendStatusWithCounter(props) {
     setIsOnline(status.isOnline);
   }
 ```
+
+3. 清除副作用
+
+
+
 当然，除了上面上面的几个 hook，开发中常用的 hook 还有其他的，如 useContext、useReducer、useCallback、useMemo等，文本就不在挨个展开，大家可以自行学习了解。
 需要注意的是，不管是什么样的 hook，react 规定我们必须把 hooks 写在函数的最外层，不能写在 ifelse 等条件语句当中，来确保 hooks 的执行顺序一致。
 

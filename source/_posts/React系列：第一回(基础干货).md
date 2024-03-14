@@ -13,7 +13,7 @@ category: React系列
 
 ### 基本介绍
 
-1. **基础原理**
+1. **基础概念**
 React仅仅是一个UI库。官方对`React`的定义为：
 > 用于构建用户界面的 JavaScript 库。
 其根基思想就是 `数据驱动视图`
@@ -170,7 +170,6 @@ export default App;
 根据有无状态，组件可以分为两种：**简单组件（simple component） 和 有状态组件（stateful component）。**
 
 4. **Hook**
-
 hook的本质，就是对逻辑的抽象。拿一个组件显隐的功能举例：
 
 原始版本：
@@ -224,7 +223,7 @@ export default function ComputerComponent(props: IProps) {
 ```
 **这种抽象，就是自定义hook，下面介绍几个常用的官方hook**
 
-**useState**
+**4.1 useState**
 
 ```javascript
 import React, { useState } from 'react';
@@ -257,7 +256,7 @@ function ExampleWithManyStates() {
 `注意`:
 state的变量不能直接修改，这是规则
 
-**useEffect**
+**4.2 useEffect**
 这个 hook 的核心作用就是在组件渲染完毕之后，你想做点别的事情（我们统一把这些别的事情称为“副作用”）。
 比如你想渲染完之后立即进行数据获取、事件订阅或者手动修改过 DOM，这些都是副作用，都可以在 useEffect 中执行。
 useEffect 就是一个 Effect Hook，给函数组件增加了操作副作用的能力。它跟 class 组件中的 componentDidMount(组件第一次渲染结束后触发)、componentDidUpdate（组件每次更新结束后触发） 和 componentWillUnmount（组件将要卸载的时候触发） 具有相同的用途，只不过被合并成了一个 API（链接：使用 Effect Hook里展示了 useEffect 和 clss 组件中这些生命周期的对比例子）。
@@ -303,23 +302,14 @@ function FriendStatusWithCounter(props) {
   }
 ```
 
-3. 清除副作用
 
-当然，除了上面上面的几个 hook，开发中常用的 hook 还有其他的，如 useContext、useReducer、useCallback、useMemo等，文本就不在挨个展开，大家可以自行学习了解。
-需要注意的是，不管是什么样的 hook，react 规定我们必须把 hooks 写在函数的最外层，不能写在 ifelse 等条件语句当中，来确保 hooks 的执行顺序一致。
-
-注： 本文大量参考平台内部某同学的文章，请留意。
-
-
-**useReducer**
+**4.3 useReducer**
 类似于useState，代码如下：
 
 ```javascript
 import React from "react"
 import { useState, useReducer } from "react"
 import { Button } from 'antd'
-
-
 
 const testreducer = (state, action) =>{
   switch (action) {
@@ -349,6 +339,132 @@ export default AboutComponent
 ```
 个人感觉，其功能在于抽逻辑代码。
 
+**4.4 useRef**
+通过这个hook，可以帮助我们调用子组件方法 
+
+
+```javascript
+import React, { useRef, forwardRef, useImperativeHandle } from "react"
+// import { useState, useReducer } from "react"
+import { Button } from 'antd'
+
+const Child = forwardRef((props, ref) => {
+  useImperativeHandle(ref, () => ({
+    fn: () => {
+      console.log('fn>>>>>>')
+    }
+  }))
+  return <div>子组建</div>
+})
+
+const AboutComponent = () => {
+  // const count = useRef(0)
+  const childRef = useRef() as any
+  const handleClick = (type) => {
+    childRef.current.fn()
+ 
+  }
+  return (
+    <div>
+      <span>about</span>
+      <Button onClick={handleClick}>按钮</Button>
+      <Child ref={childRef}/>
+
+    </div>
+  )
+}
+
+export default AboutComponent
+```
+
+还需要借助forwardRef和useImperativeHandle，实现此需求
+
+**4.5 useMemo**
+性能优化专属，有点vue中的计算属性的味道。其本质就是会对计算结果进行缓存，只有当依赖的值发生变化时，才会重新计算。代码如下：
+```javascript
+import React, { useRef, forwardRef, useImperativeHandle, useState, useMemo } from "react"
+// import { useState, useReducer } from "react"
+import { Button } from 'antd'
+
+const Child = ({value}) => {
+    // const result = value + '+ aloha'
+  const result = useMemo(() => {
+    console.log('子组建更新', value)
+    const res = value + '+ aloha'
+    return res
+  }, [value])
+  return <div>
+    子组建： { result }
+  </div>
+}
+
+const AboutComponent = () => {
+  const [count, setcount] = useState(0)
+  const [value, setvalue] = useState('hhvcg')
+  console.log('父组建更新')
+
+  const childRef = useRef() as any
+  const handleClick = (type) => {
+    setcount(count+1)
+  }
+  const handleClick2 = (type) => {
+    setvalue(value + 1)
+  }
+  return (
+    <div>
+      <span>{count}</span>
+      <Button onClick={handleClick}>按钮1</Button>
+      <Button onClick={handleClick2}>按钮2</Button>
+      <Child value={value}/>
+    </div>
+  )
+}
+
+export default AboutComponent
+```
+上面代码中，我们对result的计算过程做了缓存。只有当value变化的时候，我们才重新执行计算逻辑。倘若不用这个hook，父组建的任何状态改变，都会出发重新计算的逻辑。react中还有一个`React.memo`,也能实现我们的这个场景，就是只有当props变化的时候，才会重新渲染，否则使用记忆数据。注意，不能是引用类型。
+
+**4.6 useCallback**
+同useMemo很类似，不一样的点在于，前者是对数据的记忆，而useCallback是对于函数的记忆。
+
+```javascript
+import React, { useCallback,useRef, forwardRef, useImperativeHandle, useState, useMemo, memo } from "react"
+// import { useState, useReducer } from "react"
+import { Button } from 'antd'
+
+const Child = memo((props: any) => {
+  const { onClick } = props
+  console.log('zi组建更新', onClick)
+  return <button onClick={onClick}>子组建按钮</button>
+})
+
+const AboutComponent = () => {
+  const [count, setcount] = useState(0)
+  const [value, setvalue] = useState('hhvcg')
+  console.log('父组建更新')
+
+  const handleClick = (type) => {
+    console.log('执行>>>')
+    setcount(count+1)
+  }
+  const handleClick2 = useCallback((type) => {
+    setcount(count+1000)
+  }, [])
+
+  return (
+    <div>
+      <span>{count}</span>
+      <Button onClick={handleClick}></Button>
+      <Child onClick={handleClick2}/>
+    </div>
+  )
+}
+
+export default AboutComponent
+```
+配合memo使用
+
+
 5. **通信**
   - react中的通信，同vue有点类似，子组建通过props获取父组建的值，但是因为reat是单向数据流，子组建无法直接修改父组建的值。所以子组建通过调用父组建的方法把值传过去
   - 无关组件之间传值，context，redux。
@@ -368,4 +484,6 @@ export default AboutComponent
 
   ```
 
+注： 本文大量参考平台内部某同学的文章，请留意。
 **文毕**
+

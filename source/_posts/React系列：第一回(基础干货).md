@@ -28,7 +28,7 @@ const Example = () => {
   );
 }
 ```
-`HTML 中夹杂着看似 JavaScript 的语句在其中`,称之为jsx语法，它是对 JavaScript 语法的扩展。jsx 看起来有点像模板语言，但是他又具有 JavaScript 的全部功能。
+`HTML 中夹杂着看似 JavaScript 的语句在其中`,称之为jsx语法，它是对 JavaScript 语法的扩展，也能看做React.createElement的语法糖。jsx 看起来有点像模板语言，但是他又具有 JavaScript 的全部功能。类似于vue中的模版语法，这些机制设计的目的只有一个：`关注点分离, 简化程序的开发和维护`。
 
 类似于vue中的v-if条件渲染，jsx 中的写法如下：
 ```javascript

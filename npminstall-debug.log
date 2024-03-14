@@ -1,27 +1,19 @@
 {
-  root: 'C:\\Users\\旅途图\\Desktop\\work\\hhvcg_blog',
+  root: '/Users/hhvcg/Desktop/work/hhvcg_blog',
   registry: 'https://registry.npmmirror.com',
-  pkgs: [
-    {
-      name: 'hexo-auth',
-      version: 'latest',
-      type: 'tag',
-      alias: undefined,
-      arg: [Result]
-    }
-  ],
+  pkgs: [],
   production: false,
   cacheStrict: false,
-  cacheDir: 'C:\\Users\\旅途图\\.npminstall_tarball',
+  cacheDir: '/Users/hhvcg/.npminstall_tarball',
   env: {
     npm_config_registry: 'https://registry.npmmirror.com',
-    npm_config_argv: '{"remain":[],"cooked":["--fix-bug-versions","--china","--userconfig=C:\\\\Users\\\\旅途图\\\\.cnpmrc","--disturl=https://cdn.npmmirror.com/binaries/node","--registry=https://registry.npmmirror.com","hexo-auth","--save"],"original":["--fix-bug-versions","--china","--userconfig=C:\\\\Users\\\\旅途图\\\\.cnpmrc","--disturl=https://cdn.npmmirror.com/binaries/node","--registry=https://registry.npmmirror.com","hexo-auth","--save"]}',
-    npm_config_user_agent: 'npminstall/7.9.0 npm/? node/v14.18.3 win32 x64',
-    npm_config_cache: 'C:\\Users\\旅途图\\.npminstall_tarball',
-    NODE: 'C:\\Program Files\\node-v14.18.3-win-x64\\node.exe',
-    npm_node_execpath: 'C:\\Program Files\\node-v14.18.3-win-x64\\node.exe',
-    npm_execpath: 'C:\\Program Files\\node-v14.18.3-win-x64\\node_modules\\cnpm\\node_modules\\npminstall\\bin\\install.js',
-    npm_config_userconfig: 'C:\\Users\\旅途图\\.cnpmrc',
+    npm_config_argv: '{"remain":[],"cooked":["--fix-bug-versions","--china","--userconfig=/Users/hhvcg/.cnpmrc","--disturl=https://cdn.npmmirror.com/binaries/node","--registry=https://registry.npmmirror.com","-g","hexo-cli"],"original":["--fix-bug-versions","--china","--userconfig=/Users/hhvcg/.cnpmrc","--disturl=https://cdn.npmmirror.com/binaries/node","--registry=https://registry.npmmirror.com","-g","hexo-cli"]}',
+    npm_config_user_agent: 'npminstall/7.12.0 npm/? node/v16.20.2 darwin x64',
+    npm_config_cache: '/Users/hhvcg/.npminstall_tarball',
+    NODE: '/usr/local/bin/node',
+    npm_node_execpath: '/usr/local/bin/node',
+    npm_execpath: '/usr/local/lib/node_modules/cnpm/node_modules/npminstall/bin/install.js',
+    npm_config_userconfig: '/Users/hhvcg/.cnpmrc',
     npm_config_disturl: 'https://cdn.npmmirror.com/binaries/node',
     npm_config_r: 'https://registry.npmmirror.com',
     COREPACK_NPM_REGISTRY: 'https://registry.npmmirror.com',
@@ -49,8 +41,8 @@
     npm_config_sharp_binary_host: 'https://cdn.npmmirror.com/binaries/sharp',
     npm_config_sharp_libvips_binary_host: 'https://cdn.npmmirror.com/binaries/sharp-libvips',
     npm_config_robotjs_binary_host: 'https://cdn.npmmirror.com/binaries/robotjs',
-    npm_rootpath: 'C:\\Users\\旅途图\\Desktop\\work\\hhvcg_blog',
-    INIT_CWD: 'C:\\Users\\旅途图\\Desktop\\work\\hhvcg_blog'
+    npm_rootpath: '/Users/hhvcg/Desktop/work/hhvcg_blog',
+    INIT_CWD: '/Users/hhvcg/Desktop/work/hhvcg_blog'
   },
   binaryMirrors: {
     ENVS: {
@@ -185,7 +177,7 @@
   disableFallbackStore: false,
   workspacesMap: Map(0) {},
   enableWorkspace: false,
-  workspaceRoot: 'C:\\Users\\旅途图\\Desktop\\work\\hhvcg_blog',
+  workspaceRoot: '/Users/hhvcg/Desktop/work/hhvcg_blog',
   isWorkspaceRoot: true,
   isWorkspacePackage: false,
   offline: false,
@@ -193,11 +185,13 @@
   ignoreScripts: false,
   foregroundScripts: false,
   ignoreOptionalDependencies: false,
-  detail: false,
+  detail: true,
   forceLinkLatest: false,
   trace: false,
   engineStrict: false,
   registryOnly: false,
   client: false,
-  autoFixVersion: [Function: autoFixVersion]
+  autoFixVersion: [Function: autoFixVersion],
+  targetDir: null,
+  binDir: null
 }

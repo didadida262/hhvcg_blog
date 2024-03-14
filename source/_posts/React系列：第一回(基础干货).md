@@ -305,16 +305,29 @@ function FriendStatusWithCounter(props) {
 
 3. 清除副作用
 
-
-
 当然，除了上面上面的几个 hook，开发中常用的 hook 还有其他的，如 useContext、useReducer、useCallback、useMemo等，文本就不在挨个展开，大家可以自行学习了解。
 需要注意的是，不管是什么样的 hook，react 规定我们必须把 hooks 写在函数的最外层，不能写在 ifelse 等条件语句当中，来确保 hooks 的执行顺序一致。
-
 
 注： 本文大量参考平台内部某同学的文章，请留意。
 
 
-5. **通信**
-   无关组件之间传值，context
+**通信**
+  - react中的通信，同vue有点类似，子组建通过props获取父组建的值，但是因为reat是单向数据流，子组建无法直接修改父组建的值。所以子组建通过调用父组建的方法把值传过去
+  - 无关组件之间传值，context，redux。
+
+  contex钩子的使用，类似于redux，代码如下
+
+  ```javascript
+  <!--根组件中定义，provider包裹-->
+  export const TextContext = React.createContext('测试数据')
+    <TextContext.Provider value="dark">
+    </TextContext.Provider>
+
+  <!-- 子组件中使用 -->
+    import {TextContext} from '../Layout'
+    console.log(useContext(TextContext))
+
+
+  ```
 
 **文毕**

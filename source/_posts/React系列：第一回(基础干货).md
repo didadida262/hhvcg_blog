@@ -311,7 +311,45 @@ function FriendStatusWithCounter(props) {
 注： 本文大量参考平台内部某同学的文章，请留意。
 
 
-**通信**
+**useReducer**
+类似于useState，代码如下：
+
+```javascript
+import React from "react"
+import { useState, useReducer } from "react"
+import { Button } from 'antd'
+
+
+
+const testreducer = (state, action) =>{
+  switch (action) {
+    case "-":
+      return state - 1
+    case "+":
+      return state + 1
+  }
+}
+const AboutComponent = () => {
+  const [count, dispatch] = useReducer(testreducer, 0)
+  const handleClick = (type) => {
+    dispatch(type)
+    console.log('count>>>',count)
+  }
+  return (
+    <div>
+      <span>about</span>
+      <Button onClick={ () => handleClick('-')}>--</Button>
+      <span>{ count }</span>
+      <Button onClick={() => handleClick('+')}>++</Button>
+    </div>
+  )
+}
+
+export default AboutComponent
+```
+个人感觉，其功能在于抽逻辑代码。
+
+5. **通信**
   - react中的通信，同vue有点类似，子组建通过props获取父组建的值，但是因为reat是单向数据流，子组建无法直接修改父组建的值。所以子组建通过调用父组建的方法把值传过去
   - 无关组件之间传值，context，redux。
 

@@ -1,7 +1,7 @@
 ---
 title: CSS系列：常见问题
 date: 2023-11-20 15:22:04
-category: Css专栏
+category: css专栏
 
 ---
 
@@ -98,9 +98,20 @@ category: Css专栏
     ```
   - 3.5 grid(写法同flex一致)
 ```css
-    display：table-cell
-    text-align: center
-    vertical-align: middle
+    .test {
+        display: grid;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid red;
+        width: 100px;
+        height: 50px;
+
+    }
+    .testchild {
+        width: 60px;
+        height: 20px;
+        border: 1px solid red;
+    }
 ```
 
 

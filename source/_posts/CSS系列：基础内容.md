@@ -34,15 +34,15 @@ category: Css专栏
     　　　　float: left;
     　　　　margin-right: $value;
     　　}
+      ...
+      ...
+    /* 上面的代码类似于我们事先声明了一个代码片段，可带可不带参数。 */
+    /* 使用方式如下： */
+    .div {
+      @include left(100px)
+    }
 ```
-上面的代码类似于我们事先声明了一个代码片段，可带可不带参数。
-使用方式如下：
 
-```css
-.div {
- @include left(100px)
-}
-```
 这种方式，将css这门语言，在某种程度上，变成了稍微正规点的代码语言。
 
 4. **animation**
@@ -72,4 +72,5 @@ category: Css专栏
    - 标准盒模型（默认）： content-box
    - 怪异模型： border-box
   box-sizing确定
+
 **文毕。**

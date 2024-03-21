@@ -4,9 +4,9 @@ date: 2023-10-24 23:13:23
 category: React系列
 ---
 
-自本文开始，我们将逐步介绍react的必要概念，以备忘录。
+### 自本文开始，我们将逐步介绍react的必要概念，以备忘录。
 
-### react带来了利？
+#### react带来了利？
 - 1. `组件化开发，声明式编码`，提高开发效率及组建复用率。
 - 2. react-native中，使用js开发`移动端应用`
 - 3. 虚拟dom+优秀的diff算法，尽量减少与真实dom的交互
@@ -28,7 +28,11 @@ const Example = () => {
   );
 }
 ```
-`HTML 中夹杂着看似 JavaScript 的语句在其中`,称之为jsx语法，它是对 JavaScript 语法的扩展，也能看做React.createElement的语法糖。jsx 看起来有点像模板语言，但是他又具有 JavaScript 的全部功能。类似于vue中的模版语法，这些机制设计的目的只有一个：`关注点分离, 简化程序的开发和维护`。
+`HTML 中夹杂着看似 JavaScript 的语句在其中`,称之为jsx语法，它是`对 JavaScript 语法的扩展，也能看做React.createElement的语法糖`。其中的React.createElement做的事情很清晰，他有三个参数type、config和children。顾名思义，分别代表节点类型如`div`、节点所有属性如`className`和节点的子节点。就是说以jsx文件代码为输入，编译生成虚拟dom，然后通过render方法生成真实的dom节点。
+jsx 看起来有点像模板语言，但是他又具有 JavaScript 的全部功能。类似于vue中的模版语法，这些机制设计的目的只有一个：`关注点分离, 简化程序的开发和维护`。
+
+**顺便差一张react的渲染逻辑图，跟vue如出一辙。**
+<img src="/img/react框架流程.jpg" alt="">
 
 类似于vue中的v-if条件渲染，jsx 中的写法如下：
 ```javascript
@@ -467,7 +471,7 @@ export default AboutComponent
 
 5. **通信**
   - react中的通信，同vue有点类似，子组建通过props获取父组建的值，但是因为reat是单向数据流，子组建无法直接修改父组建的值。所以子组建通过调用父组建的方法把值传过去
-  - 无关组件之间传值，context，redux。
+  - 无关组件之间传值，`context，redux`。
 
   contex钩子的使用，类似于redux，代码如下
 
@@ -479,8 +483,8 @@ export default AboutComponent
 
   <!-- 子组件中使用 -->
     import {TextContext} from '../Layout'
+    <!--  消费 -->
     console.log(useContext(TextContext))
-
 
   ```
 

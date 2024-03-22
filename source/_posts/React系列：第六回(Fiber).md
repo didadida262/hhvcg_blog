@@ -5,11 +5,23 @@ category: React系列
 ---
 
 ### 本文简单聊聊React的Fiber
+<!-- 
+react16之后，用fiber取代了stack reconciler，核心设计是增量渲染，将渲染工作分割为多区块，将其分散到多个帧中去执行。
+
+1. `Stack Reconciler`
+
+2. `Fiber Reconciler`
+
+
+
 
 一. 官方团队通过fiber，对react底层的算法进行了重写
 fiber节点， 实际上就是虚拟dom，用来描述真实dom的一种ast。
 
-react16之后，用fiber重构了stack reconciler，实现异步渲染
+
+
+
+
  `ReactDOM.createRoot开启异步渲染`
 1. stack reconciler（栈调和）被fiber（纤程）取代
 reconciler（diff）负责找不同，render负责渲染不同
@@ -50,3 +62,8 @@ fiber树和dom树之间的关系？不就是同一个东西嘛？
 
 2. `时间切片`
 通过schedule将long任务切片处理，以免任务阻塞渲染进程。
+
+
+react的渲染流程
+
+初始化挂载， setstate， diff + patch --> render-->

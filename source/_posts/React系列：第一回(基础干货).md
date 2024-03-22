@@ -468,6 +468,9 @@ export default AboutComponent
 ```
 配合memo使用
 
+**4.7 useLayoutEffect**
+同useEffect几乎一摸一样，但稍有些区别。官方建议： 大多数场景下直接使用`useEffect`，但代码引起页面闪烁就推荐使用`useLayoutEffect`处理。即：直接操作dom样式相关的使用后者。
+useLayoutEffect是在所有dom变更之后`同步调用`。重点就在于这个同步，大量变动会引起阻塞，建议优先useEffect。
 
 5. **通信**
   - react中的通信，同vue有点类似，子组建通过props获取父组建的值，但是因为reat是单向数据流，子组建无法直接修改父组建的值。所以子组建通过调用父组建的方法把值传过去
@@ -487,6 +490,9 @@ export default AboutComponent
     console.log(useContext(TextContext))
 
   ```
+
+
+
 
 注： 本文大量参考平台内部某同学的文章，请留意。
 **文毕**

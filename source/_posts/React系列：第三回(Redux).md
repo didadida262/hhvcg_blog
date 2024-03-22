@@ -12,9 +12,8 @@ category: React系列
 // 安装
 cnpm install @reduxjs/toolkit react-redux
 ```
-
 #### 一. 基本使用
-
+redux是一个状态管理容器，类似vuex，几个重要的角色： `store（数据源）、action及reducer（负责修改数据）`。下面代码演示他的基本使用：
 ```javascript
 // index.js中引入redux的store和provider方法
 import store from './store'
@@ -152,7 +151,10 @@ export default store
   console.log('count:', count)
 
 ```
-完毕.
+
+**三. asdasd**
+
+总结一下：` action --> dispatcher ---> store ---> view`, 同vuex如出一辙
 
 
 

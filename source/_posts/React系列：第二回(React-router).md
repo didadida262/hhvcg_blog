@@ -255,6 +255,8 @@ export default HomeComponent
 **history和hash**
 <img src="/img/react-router6.png" alt="">
 
+一句话总结，前者利用h5提供的新的`api-history`，通过`pushState`、`popState`、`replaceState`事件切换路由；后者则是通过监听`hasChange`事件。
+
 
 #### 五. 高阶组件配合token控制跳转
 实现逻辑： 有token，正常跳转，无token，跳转到登录

@@ -1,5 +1,5 @@
 ---
-title: 'canvas: 基本使用'
+title: 'Canvas系列: 基本使用'
 date: 2023-11-23 19:17:53
 category: 前端游戏杂谈
 ---

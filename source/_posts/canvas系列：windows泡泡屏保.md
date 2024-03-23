@@ -1,5 +1,5 @@
 ---
-title: canvas系列：windows泡泡屏保
+title: Canvas系列：windows泡泡屏保
 date: 2023-11-22 20:27:23
 category: 前端游戏杂谈
 ---

@@ -121,3 +121,5 @@ export const handleGetVideo = (event: any, message: any) => {
     })
 }
 ```
+
+总而言之， electron能够让我们具备这样一种能力： **整合前后端的能力， 开发客户端软件。**

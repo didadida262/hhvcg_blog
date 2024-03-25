@@ -30,7 +30,7 @@ camera.position.z = 10;
 透视视角：
 <img src="/img/threejs_camera_透视.png" alt="parser">
 
-1. **正交相机**
+2. **正交相机**
 语法：`OrthographicCamera( left, right, top, bottom, near, far )`
 `left`：摄像机视锥体左侧面。
 `right`：摄像机视锥体右侧面。
@@ -50,6 +50,15 @@ scene.add( camera );
 ```
 正交视角：
 <img src="/img/threejs_camera_正交.png" alt="parser">
+
+再补一个直观的
+
+`透视`
+<img src="/img/threejs_camera2.png" alt="parser">
+
+`正交`
+<img src="/img/threejs_camera1.png" alt="parser">
+
 
 **透视相机和正交的区别：前者模拟人眼观察的效果，用于相机漫游等场景，后者通常用于全图总览等场景**
 

@@ -6,7 +6,7 @@ category: 前端三维系列
 
 ### 本文继续探索threejs，简单介绍几个基础组件,及如何将第三方软件绘制的模型导入。
 
-1. 我们希望他能够跟随鼠标的方向进行转动，如何实现？
+**1. 我们希望他能够跟随鼠标的方向进行转动，如何实现？**
 
 ```javascript
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
@@ -20,7 +20,8 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
     },
 ```
 
-2. 为了直观的研究坐标体系，我们就得先直观的看到。如何实现？代码如下：
+**2. 为了直观的研究坐标体系，我们就得先直观的看到。如何实现？代码如下：**
+
 ```javascript
     // 添加坐标轴
     setAxes() {
@@ -32,8 +33,9 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 调用一下AxesHelper即可。效果图如下：
 <img src="/img/threejs2_1.webp" alt="图片描述">
 
-3. 添加网格地面
+**3. 添加网格地面**
 threejs官方提供了一个现成的网格地面，我们可以直接拿来用.
+
 ```javascript
 // grid
 const gridHelper = new THREE.GridHelper(50,50)
@@ -42,9 +44,9 @@ scene.add(gridHelper)
 
 <img src="/img/threejs2_2.gif" alt="图片描述">
 
-4. dat库的使用
-  ```javascript
+**4. dat库的使用**
 
+  ```javascript
   import * as dat from 'dat.gui'
   // ...
   // ...
@@ -101,7 +103,7 @@ scene.add(gridHelper)
 
   ```
 
-5. 导入用第三方建模软件如blender等制作的模型
+**5. 导入用第三方建模软件如blender等制作的模型**
 用过懂车帝的同学都应该看过，懂车帝的3d炫酷的车模型。那么那样的东西，是如何实现的呢？准确的疑问描述：我们怎么在页面端或者手机的app上，实现那么炫酷的东西呢？
 <img src="/img/threejs2_3.webp" alt="图片描述">
 

@@ -384,7 +384,7 @@ export default AboutComponent
 还需要借助forwardRef和useImperativeHandle，实现此需求
 
 **4.5 useMemo**
-性能优化专属，有点vue中的计算属性的味道。其本质就是会对计算结果进行缓存，只有当依赖的值发生变化时，才会重新计算。代码如下：
+性能优化专属，有点vue中的`计算属性`的味道。其本质就是会对计算结果进行缓存，只有当依赖的值（第二个参数）发生变化时，才会重新计算。代码如下：
 ```javascript
 import React, { useRef, forwardRef, useImperativeHandle, useState, useMemo } from "react"
 // import { useState, useReducer } from "react"
@@ -426,10 +426,10 @@ const AboutComponent = () => {
 
 export default AboutComponent
 ```
-上面代码中，我们对result的计算过程做了缓存。只有当value变化的时候，我们才重新执行计算逻辑。倘若不用这个hook，父组建的任何状态改变，都会出发重新计算的逻辑。react中还有一个`React.memo`,也能实现我们的这个场景，就是只有当props变化的时候，才会重新渲染，否则使用记忆数据。注意，不能是引用类型。
+上面代码中，我们对result的计算过程做了缓存。只有当value变化的时候，我们才重新执行计算逻辑。倘若不用这个hook，父组建的任何状态改变，都会出发重新计算的逻辑。react中还有一个`React.memo`,也能实现我们的这个场景，就是只有当props变化的时候，才会重新渲染，否则使用记忆数据。`注意，不能是引用类型, 引用类型只要变化都会触发re-render，即使memo的那个纯组件没用到具体的值`。两者没什么优劣之分。`最佳实践`： 组件导出时直接React.memo(组件)。
 
 **4.6 useCallback**
-同useMemo很类似，不一样的点在于，前者是对数据的记忆，而useCallback是对于函数的记忆。
+同useMemo很类似，不一样的点在于，前者是对数据的记忆，而useCallback是对于函数的记忆。（本质上useCallback就是useMemo的语法糖）
 
 ```javascript
 import React, { useCallback,useRef, forwardRef, useImperativeHandle, useState, useMemo, memo } from "react"
@@ -457,9 +457,9 @@ const AboutComponent = () => {
 
   return (
     <div>
-      <span>{count}</span>
-      <Button onClick={handleClick}></Button>
-      <Child onClick={handleClick2}/>
+      <span>{ count }</span>
+      <Button onClick={ handleClick }></Button>
+      <Child onClick={ handleClick2 }/>
     </div>
   )
 }

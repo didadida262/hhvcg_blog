@@ -14,7 +14,7 @@ threejs中的光照配置的标配： **环境光 + 光源**
     const envLight = new THREE.AmbientLight('white', 1)
     scene.add(envLight)
    ```
-
+`注意：不添加环境光，物体设置的颜色无法显示。`
 2. **点光源**
    ```javascript
     // 灯光配置

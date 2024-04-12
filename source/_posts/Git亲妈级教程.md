@@ -87,6 +87,7 @@ git branch -a
 git rebase -i HEAD~分枝数
 git push -f
 
+
 // 查看本地的git配置信息
 git config --global -l
 git config --list 查看所有信息

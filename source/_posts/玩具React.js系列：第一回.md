@@ -8,6 +8,57 @@ category: 前端剑宗专栏
 
 ### 文本介绍createElement和render
 
+#### 1. 先看看react的使用
+```javascript
+    const content = React.createElement(
+        'div',
+        {
+        title: 'title',
+        id: 'id',
+        },
+        '川崎重工'
+    )
+    console.log('content>>>', content)
+    const root = ReactDOM.createRoot(
+        document.getElementById('root')
+    );
+    root.render(content)
+```
+
+从上面代码不难看出，通过调用`createElement`，会生成一种dom的数据结构，具体长啥样根据入参决定。这一块的内容我们之前在介绍vue底层时有提到过，他们都是根基于一个库`snabbdom`.**就是通过结构化的数据， 去描述dom节点**。然后做的事情就是`render`, 将结构化的数据转换成真实的dom，挂载到页面中去。
+<img src="/img/reactjs系列1_1.gif" alt="">
+
+
+#### 2. 了解了其所做的事情，那么接下来，我们来diy实现之
+`createElement`实现很简单，根据入参，生成一个对象并返回，这个对象我们称之为**虚拟dom**
+```javascript
+    const myCreateElement = (type, props, content) => {
+      const res = {
+        type: type,
+        props: {
+          ...props
+        },
+        child: content
+      }
+      return res
+    }
+
+    const VNode = myCreateElement(
+      'div',
+      {
+        title: 'title',
+        id: 'id'
+      },
+      '一段文本....川崎重工'
+    )
+    console.log(VNode)
+```
+
+`render`
+
+
+
+
 
 
 

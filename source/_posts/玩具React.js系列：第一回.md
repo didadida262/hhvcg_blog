@@ -32,15 +32,30 @@ category: 前端剑宗专栏
 #### 2. 了解了其所做的事情，那么接下来，我们来diy实现之
 `createElement`实现很简单，根据入参，生成一个对象并返回，这个对象我们称之为**虚拟dom**
 ```javascript
-    const myCreateElement = (type, props, content) => {
-      const res = {
+    const createTextNode = (child) => {
+      return {
+        type: 'text',
+        props: {
+          nodeValue: child,
+          children: []
+          
+        }
+      }
+    }
+    const myCreateElement = (type, props, ...children) => {
+      return {
         type: type,
         props: {
-          ...props
+          ...props,
+          children: children.map((child) => typeof child === 'object'? child: createTextNode(child))
         },
-        child: content
       }
-      return res
+    }
+    const myRender = (element, container) => {
+      const dom = element.type === 'text'? document.createTextNode(element.props.nodeValue): document.createElement(element.type)
+      Object.keys(element.props).filter((item) => item !== 'children').forEach((item) => dom[item] = element.props[item])
+      element?.props?.children?.forEach((child) => myRender(child, dom))
+      container.appendChild(dom)
     }
 
     const VNode = myCreateElement(
@@ -52,9 +67,23 @@ category: 前端剑宗专栏
       '一段文本....川崎重工'
     )
     console.log(VNode)
+    
 ```
 
 `render`
+
+```javascript
+    const myRender = (element, container) => {
+      const dom = element.type === 'text'? document.createTextNode(element.props.nodeValue): document.createElement(element.type)
+      Object.keys(element.props).filter((item) => item !== 'children').forEach((item) => dom[item] = element.props[item])
+      element?.props?.children?.forEach((child) => myRender(child, dom))
+      container.appendChild(dom)
+    }
+```
+
+效果如下：
+
+<img src="/img/react_toy1_2.gif" alt="">
 
 
 

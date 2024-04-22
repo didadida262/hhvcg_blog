@@ -51,13 +51,6 @@ category: 前端剑宗专栏
         },
       }
     }
-    const myRender = (element, container) => {
-      const dom = element.type === 'text'? document.createTextNode(element.props.nodeValue): document.createElement(element.type)
-      Object.keys(element.props).filter((item) => item !== 'children').forEach((item) => dom[item] = element.props[item])
-      element?.props?.children?.forEach((child) => myRender(child, dom))
-      container.appendChild(dom)
-    }
-
     const VNode = myCreateElement(
       'div',
       {
@@ -85,13 +78,7 @@ category: 前端剑宗专栏
 
 <img src="/img/react_toy1_2.gif" alt="">
 
-
-
-
-
-
-
-
+文毕。
 
 <!-- `代数效应`: 看了tm一圈，愣是没看懂。 -->
 

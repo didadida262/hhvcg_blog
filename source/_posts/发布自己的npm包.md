@@ -1,3 +1,10 @@
+<!--
+ * @Description: 
+ * @Author: didadida262
+ * @Date: 2024-04-22 16:03:57
+ * @LastEditors: didadida262
+ * @LastEditTime: 2024-04-23 13:50:40
+-->
 ---
 title: 发布自己的npm包
 date: 2024-04-22 16:03:57
@@ -23,6 +30,24 @@ category: 前端剑宗专栏
 
 **整个流程还是很简单的，当然在实操过程中碰到一个小问题。**
 `npm login 没有出现 username,反而是跳转到了cnpm注册...`,解决方案：`npm config set registry https://registry.npmjs.org/`
+
+### 更新包的版本
+```javascript
+// patch：补丁号，修复bug，小变动，如 v1.0.0->v1.0.1
+npm version patch
+
+// minor：次版本号，增加新功能，如 v1.0.0->v1.1.0
+npm version minor
+
+// major：主版本号，不兼容的修改，如 v1.0.0->v2.0.0
+npm version major
+
+npm publish
+```
+在使用了包的项目中，更新目标包：
+```javascript
+npm update packageName (-D | -S)
+```
 
 文毕。
 

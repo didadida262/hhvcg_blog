@@ -81,8 +81,8 @@ react的底层并未通过`timeRemaining`获取剩余时间，而是自创了一
 
 #### 2.1 fiber
 fiber也是一种数据结构，类似vnode
-在vue中，vnode --> 真实dom
-在react中， vnode（ReactElement） --> fiber ---> 真实dom
+在vue中，`vnode --> 真实dom`
+在react中， `vnode（ReactElement） --> fiber ---> 真实dom`
 
 ### 2.2 代码
 完整代码如下：
@@ -153,5 +153,8 @@ const myRender = (element, container) => {
 
 ```
 
+### 效果如下：
+
+<img src="/img/玩具react2_5.gif" alt="">
 
 

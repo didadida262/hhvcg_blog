@@ -1,8 +1,7 @@
 ---
 title: 玩具Reactjs系列：第三回
 date: 2024-05-15 10:42:13
-category: 前端剑宗专栏
-
+category: React系列
 ---
 
 ### 在前文中，我们介绍了基于所谓的fiber架构及requestIdleCallback实现的react快速渲染逻辑。本文中，我们介绍react的`commit`机制。

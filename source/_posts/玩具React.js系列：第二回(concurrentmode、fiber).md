@@ -1,7 +1,8 @@
 ---
 title: 玩具Reactjs系列：第二回(concurrentmode、fiber)
 date: 2024-04-23 00:18:07
-category: 前端剑宗专栏
+category: React系列
+
 ---
 
 ### 本文介绍，react快速渲染的原理
@@ -73,23 +74,46 @@ render做的事情很清晰，就是**根据element的信息，生成真实的do
 **dealine用来提供额外的时间信息, 其中requestIdleCallback的deadline存在一个timeRemaining方法当前帧剩余时间**
 react的底层并未通过`timeRemaining`获取剩余时间，而是自创了一套`schedule`
 
-### 二. 具体实现
+### 二. 借助requestIdleCallback改造实现
 流程：
 <img src="/img/玩具react2_3.png" alt="">
 
 根本思路: **借助requestIdleCallback，将之前render的这个大的任务打碎，然后见缝插针式的执行**
 
-#### 2.1 fiber
+#### fiber
 fiber也是一种数据结构，类似vnode
 在vue中，`vnode --> 真实dom`
 在react中， `vnode（ReactElement） --> fiber ---> 真实dom`
+大概长下面这样：
+<img src="/img/玩具react2_fiber.jpg" alt="">
 
-### 2.2 代码
-完整代码如下：
+#### 代码
 
 ```javascript
 
 let nextUniteWork = null
+const myCreateElement = (type, props, ...children) => {
+  return {
+    type: type,
+    props: {
+      ...props,
+      children: children.map((child) => typeof child === 'object'? child: createTextNode(child))
+    },
+  }
+}
+const createTextNode = (child) => {
+  return {
+    type: 'text',
+    props: {
+      nodeValue: child,
+      children: []
+    }
+  }
+}
+const createDom = (fiber) => {
+  const dom = fiber.type === 'text'? document.createTextNode(fiber.props.nodeValue): document.createElement(fiber.type)
+return dom
+}
 const performUniteOfWork = (fiber) => {
   if (!fiber.dom) {
     fiber.dom = createDom(fiber)
@@ -153,8 +177,9 @@ const myRender = (element, container) => {
 
 ```
 
-### 效果如下：
+#### 效果如下
 
 <img src="/img/玩具react2_5.gif" alt="">
 
 
+总体的逻辑就是：**一个节点一个节点的往深处走，创建dom，添加父亲兄弟节点信息，走到尽头，在一步步的往回收缩的走，知道扫完到跟节点**

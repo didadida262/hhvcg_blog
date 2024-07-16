@@ -1,5 +1,5 @@
 ---
-title: 玩具Reactjs系列：第三回
+title: 玩具Reactjs系列：第三回(commit)
 date: 2024-05-15 10:42:13
 category: React系列
 ---
@@ -34,6 +34,28 @@ fiber结构的生成及dom挂载，是同步进行的。这直接导致一个现
 
 let nextUniteWork = null
 let wiproot = null
+const createTextNode = (child) => {
+  return {
+    type: 'text',
+    props: {
+      nodeValue: child,
+      children: []
+    }
+  }
+}
+const myCreateElement = (type, props, ...children) => {
+    return {
+      type: type,
+      props: {
+        ...props,
+        children: children.map((child) => typeof child === 'object'? child: createTextNode(child))
+      },
+    }
+  }
+const createDom = (fiber) => {
+    const dom = fiber.type === 'text'? document.createTextNode(fiber.props.nodeValue): document.createElement(fiber.type)
+  return dom
+}
 const performUniteOfWork = (fiber) => {
   console.log('<<<<<<<<<<<<<<<<performUniteOfWork>>>>>>>>>>>>>')
   console.log('fiber>>>', fiber)
@@ -97,7 +119,7 @@ const workLoop = (deadline) => {
   }
   requestIdleCallback(workLoop)
 }
-// requestIdleCallback(workLoop)
+requestIdleCallback(workLoop)
 
 const myRender = (element, container) => {
   console.log('element>>', element)
@@ -111,3 +133,5 @@ const myRender = (element, container) => {
 }
 
 ```
+
+总体逻辑： **将fiber结构生成的过程及挂在阶段分隔开，先生成，在批量挂载**

@@ -4,21 +4,19 @@ date: 2023-10-24 23:13:23
 category: React系列
 ---
 
-### 自本文开始，我们将逐步介绍react的必要概念，以备忘录。
+**自本文开始，我们将逐步介绍react的必要概念，以备忘录。**
 
-#### react带来了利？
+### react带来了利？
 - 1. `组件化开发，声明式编码`，提高开发效率及组建复用率。
 - 2. react-native中，使用js开发`移动端应用`
 - 3. 虚拟dom+优秀的diff算法，尽量减少与真实dom的交互
 
-### 基本介绍
-
-1. **基础概念**
+### 基础概念
 React仅仅是一个UI库。官方对`React`的定义为：
 > 用于构建用户界面的 JavaScript 库。
 其根基思想就是 `数据驱动视图`
 
-2. **jsx语法**
+### jsx语法
 ```javascript
 const Example = () => {
   return (
@@ -34,7 +32,7 @@ jsx 看起来有点像模板语言，但是他又具有 JavaScript 的全部功�
 **顺便差一张react的渲染逻辑图，跟vue如出一辙。**
 <img src="/img/react框架流程.jpg" alt="">
 
-类似于vue中的v-if条件渲染，jsx 中的写法如下：
+### 条件渲染，类似于vue中的v-if.jsx 中的写法如下：
 ```javascript
 const Example = () => {
     // 条件判断，随机显示男女
@@ -48,7 +46,7 @@ const Example = () => {
   );
 }
 ```
-3. **React组件**
+### React组件
 ```javascript
 import React from 'react';
 import ReactDOM from 'react-dom/client';
@@ -173,8 +171,8 @@ export default App;
 实际就是一个计数器，点击++。但我们引入了新的内容 **useState**，说白了就是组件内部有了状态变量。useState就是所谓的 是 react hooks 中的一种。
 根据有无状态，组件可以分为两种：**简单组件（simple component） 和 有状态组件（stateful component）。**
 
-4. **Hook**
-hook的本质，就是对逻辑的抽象。拿一个组件显隐的功能举例：
+### Hook
+`hook的本质，就是对逻辑的抽象。`拿一个组件显隐的功能举例：
 
 原始版本：
 ```javascript
@@ -227,7 +225,7 @@ export default function ComputerComponent(props: IProps) {
 ```
 **这种抽象，就是自定义hook，下面介绍几个常用的官方hook**
 
-**4.1 useState**
+`useState`
 
 ```javascript
 import React, { useState } from 'react';
@@ -244,8 +242,7 @@ function Example() {
   );
 }
 ```
-在这里，useState 就是一个 Hook （通过在函数组件里调用它来给组件添加一些内部 state。React 会在重复渲染时保留这个 state。useState 会返回一对值：**当前状态和一个让你更新它的函数**，你可以在事件处理函数中或其他一些地方调用这个函数。你可以简单把它理解成调用这个函数会更新 state 的状态，然后这组件重新渲染。（使用 State Hook里展示了一个对比 useState 和 this.state 的例子）。
-useState 唯一的参数就是初始 state。在上面的例子中，我们的计数器是从零开始的，所以初始 state 就是 0。值得注意的是，这里的 state 不一定要是一个对象，可以是任意值。这个初始 state 参数只有在第一次渲染时会被用到。
+在这里，useState 就是一个 Hook （通过在函数组件里调用它来给组件添加一些内部 state。React 会在重复渲染时保留这个 state。useState 会返回一对值：**当前状态和一个让你更新它的函数**，你可以在事件处理函数中或其他一些地方调用这个函数。你可以简单把它理解成调用这个函数会更新 state 的状态，然后这组件重新渲染。在上面的例子中，我们的计数器是从零开始的，所以初始 state 就是 0。值得注意的是，这里的 state 不一定要是一个对象，可以是任意值。这个初始 state 参数只有在第一次渲染时会被用到。
 
 你可以在一个组件中多次使用 State Hook:
 ```javascript
@@ -260,13 +257,11 @@ function ExampleWithManyStates() {
 `注意`:
 state的变量不能直接修改，这是规则
 
-**4.2 useEffect**
+`useEffect`
 这个 hook 的核心作用就是在组件渲染完毕之后，你想做点别的事情（我们统一把这些别的事情称为“副作用”）。
 比如你想渲染完之后立即进行数据获取、事件订阅或者手动修改过 DOM，这些都是副作用，都可以在 useEffect 中执行。
 useEffect 就是一个 Effect Hook，给函数组件增加了操作副作用的能力。它跟 class 组件中的 componentDidMount(组件第一次渲染结束后触发)、componentDidUpdate（组件每次更新结束后触发） 和 componentWillUnmount（组件将要卸载的时候触发） 具有相同的用途，只不过被合并成了一个 API（链接：使用 Effect Hook里展示了 useEffect 和 clss 组件中这些生命周期的对比例子）。
-即 useEffect 可以根据参数的不同配置，在组件不同的渲染时机被调用。useEffect 接受两个参数：
-1. 副作用函数
-2. 依赖项，类型是数组
+即 useEffect 可以根据参数的不同配置，在组件不同的渲染时机被调用。useEffect 接受两个参数：`副作用函数`,`依赖项，类型是数组`
 ```javascript
 // 依赖项是空数组，第一次渲染结束后，调用一次
 useEffect(() => {
@@ -307,7 +302,7 @@ function FriendStatusWithCounter(props) {
 ```
 
 
-**4.3 useReducer**
+`useReducer`
 类似于useState，代码如下：
 
 ```javascript
@@ -343,7 +338,7 @@ export default AboutComponent
 ```
 个人感觉，其功能在于抽逻辑代码。
 
-**4.4 useRef**
+`useRef`
 通过这个hook，可以帮助我们调用子组件方法 
 
 
@@ -383,7 +378,7 @@ export default AboutComponent
 
 还需要借助forwardRef和useImperativeHandle，实现此需求
 
-**4.5 useMemo**
+`useMemo`
 性能优化专属，有点vue中的`计算属性`的味道。其本质就是会对计算结果进行缓存，只有当依赖的值（第二个参数）发生变化时，才会重新计算。代码如下：
 ```javascript
 import React, { useRef, forwardRef, useImperativeHandle, useState, useMemo } from "react"
@@ -428,7 +423,7 @@ export default AboutComponent
 ```
 上面代码中，我们对result的计算过程做了缓存。只有当value变化的时候，我们才重新执行计算逻辑。倘若不用这个hook，父组建的任何状态改变，都会出发重新计算的逻辑。react中还有一个`React.memo`,也能实现我们的这个场景，就是只有当props变化的时候，才会重新渲染，否则使用记忆数据。`注意，不能是引用类型, 引用类型只要变化都会触发re-render，即使memo的那个纯组件没用到具体的值`。两者没什么优劣之分。`最佳实践`： 组件导出时直接React.memo(组件)。
 
-**4.6 useCallback**
+`useCallback`
 同useMemo很类似，不一样的点在于，前者是对数据的记忆，而useCallback是对于函数的记忆。（本质上useCallback就是useMemo的语法糖）
 
 ```javascript
@@ -468,11 +463,11 @@ export default AboutComponent
 ```
 配合memo使用
 
-**4.7 useLayoutEffect**
+`useLayoutEffect`
 同useEffect几乎一摸一样，但稍有些区别。官方建议： 大多数场景下直接使用`useEffect`，但代码引起页面闪烁就推荐使用`useLayoutEffect`处理。即：直接操作dom样式相关的使用后者。
 useLayoutEffect是在所有dom变更之后`同步调用`。重点就在于这个同步，大量变动会引起阻塞，建议优先useEffect。
 
-5. **通信**
+### 通信
   - react中的通信，同vue有点类似，子组建通过props获取父组建的值，但是因为reat是单向数据流，子组建无法直接修改父组建的值。所以子组建通过调用父组建的方法把值传过去
   - 无关组件之间传值，`context，redux`。
 
@@ -490,9 +485,6 @@ useLayoutEffect是在所有dom变更之后`同步调用`。重点就在于这个
     console.log(useContext(TextContext))
 
   ```
-
-
-
 
 注： 本文大量参考平台内部某同学的文章，请留意。
 **文毕**

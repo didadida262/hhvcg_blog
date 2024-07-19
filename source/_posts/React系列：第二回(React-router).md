@@ -4,19 +4,17 @@ date: 2024-03-08 12:55:50
 category: React系列
 ---
 
-### 本文见到那介绍下React-router的相关内容
+**本文简单介绍下React-router的相关内容**
 
 类似于vue-router，安装react-router配置react项目的路由。先安装一下：
+
 ```javascript
-cnpm install react-router-dom
+  cnpm install react-router-dom
 ```
 
-#### 一. 基本使用
-1. `简易版本`
+### 简易版本
 ```javascript
-
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-
 const router = createBrowserRouter([
   {
     path: '/login',
@@ -36,7 +34,7 @@ const router = createBrowserRouter([
 上面代码中，我们定义了两个路由的匹配规则，效果显示
 <img src="/img/react-router1.gif" alt="">
 
-2. `正儿八经的前端项目中，路由的配置`
+### 通用路由配置
 
 ```javascript
 // router文件
@@ -78,7 +76,7 @@ export default ContentComponent
 <img src="/img/react-router2.gif" alt="">
 
 
-#### 二. 两种跳转方式：声明式导航和命令式导航
+### 两种跳转方式：声明式导航和命令式导航
 
 声明式导航通过Link，而编程式导航通过路由的钩子`useNavigate`
 
@@ -118,8 +116,8 @@ export default LoginComponent
 <img src="/img/react-router3.gif" alt="">
 
 
-#### 三. 参数获取
-1. `通过hook:useSearchParams获取当前url中的地址栏中的参数`
+### 参数获取
+- `通过hook:useSearchParams获取当前url中的地址栏中的参数`
 ```javascript
 // content
 ...
@@ -144,7 +142,7 @@ export default LoginComponent
 效果如下：
 <img src="/img/react-router4.gif" alt="">
 
-2. `类似vue中的占位符配合hook:useParams获取参数`
+- `类似vue中的占位符配合hook:useParams获取参数`
 
 ```javascript
 // 路由文件修改
@@ -164,7 +162,7 @@ export default LoginComponent
 效果如下：
 <img src="/img/react-router5.gif" alt="">
 
-#### 四. 嵌套路由
+### 嵌套路由
 1. `给路由新增子路由，结构如下：`
 
 ```javascript
@@ -258,7 +256,7 @@ export default HomeComponent
 一句话总结，前者利用h5提供的新的`api-history`，通过`pushState`、`popState`、`replaceState`事件切换路由；后者则是通过监听`hasChange`事件。
 
 
-#### 五. 高阶组件配合token控制跳转
+### 高阶组件配合token控制跳转
 实现逻辑： 有token，正常跳转，无token，跳转到登录
 
 ```javascript
@@ -296,14 +294,14 @@ export default AuthRoute
   },
 ```
 
-#### 六. 本地模拟服务，查看build产物
+### 本地模拟服务，查看build产物
 ```javascript
 cnpm install -g serve
 
 serve -s build
 ```
 
-#### 七. 路由懒加载
+### 路由懒加载
 
 ```javascript
 // 路由懒加载

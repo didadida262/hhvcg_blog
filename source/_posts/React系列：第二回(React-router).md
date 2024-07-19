@@ -4,7 +4,7 @@ date: 2024-03-08 12:55:50
 category: React系列
 ---
 
-**本文简单介绍下React-router的相关内容**
+**本文简单介绍下react-router的相关内容**
 
 类似于vue-router，安装react-router配置react项目的路由。先安装一下：
 

@@ -176,5 +176,5 @@ position: relative
 10. 来个冷门但是还蛮核心的：width:100%;height:100%什么时候生效？
 - 父元素有明确宽高的
 - 父元素是相对定位或绝对定位的
-- 父元素是 flex 或 grid 容器
+- 父元素是 `flex` 或 `grid` 容器
 

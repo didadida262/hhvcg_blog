@@ -5,7 +5,9 @@ category: React系列
 
 ---
 
-### 本文介绍，react快速渲染的原理
+**本文介绍，react快速渲染的原理**
+
+### 如何避免卡死？
 
 在第一回中，我们通过手撕`myCreateElement`和`myRender`实现了基本的功能，但是仔细观察下之前写的render，是否存在什么问题？
 
@@ -22,7 +24,7 @@ render做的事情很清晰，就是**根据element的信息，生成真实的do
 
 那么react底层是如何做优化的呢？答案也很清晰，利用一个api：`requestIdleCallback`.
 
-### 一. requestIdleCallback
+#### requestIdleCallback
 该函数的作用，就是能够观察浏览器在处理完每帧的工作之后，是否存在空余时间。如果有，就执行requestIdleCallback的回调，没有，则忽略。
 
 因此，react能够做到快速的底层思路就有了：**把render的操作变成一个个的任务单元。**这些任务单元执行的前提条件是：**当前帧存在空余时间，有则执行，没有下一帧继续判断执行。**
@@ -71,16 +73,16 @@ render做的事情很清晰，就是**根据element的信息，生成真实的do
 打印如下：
 <img src="/img/玩具react系列2_2.jpeg" alt="">
 
-**dealine用来提供额外的时间信息, 其中requestIdleCallback的deadline存在一个timeRemaining方法当前帧剩余时间**
+**dealine用来提供额外的时间信息, 其中requestIdleCallback的deadline存在一个timeRemaining方法获取当前帧剩余时间**
 react的底层并未通过`timeRemaining`获取剩余时间，而是自创了一套`schedule`
 
-### 二. 借助requestIdleCallback改造实现
+#### 借助requestIdleCallback改造实现
 流程：
 <img src="/img/玩具react2_3.png" alt="">
 
 根本思路: **借助requestIdleCallback，将之前render的这个大的任务打碎，然后见缝插针式的执行**
 
-#### fiber
+#### Fiber
 fiber也是一种数据结构，类似vnode
 在vue中，`vnode --> 真实dom`
 在react中， `vnode（ReactElement） --> fiber ---> 真实dom`
@@ -182,4 +184,4 @@ const myRender = (element, container) => {
 <img src="/img/玩具react2_5.gif" alt="">
 
 
-总体的逻辑就是：**一个节点一个节点的往深处走，创建dom，添加父亲兄弟节点信息，走到尽头，在一步步的往回收缩的走，知道扫完到跟节点**
+总体的逻辑就是：**一个节点一个节点的往深处走，创建dom，添加父亲兄弟节点信息，走到尽头，在一步步的往回收缩的走，直到扫完所有节点，最终回到跟节点**

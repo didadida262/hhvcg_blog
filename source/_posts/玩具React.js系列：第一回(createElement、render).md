@@ -5,12 +5,12 @@ category: React系列
 
 ---
 
-### 本系列文章的目标，就一个，类似于vue的学习过程，我们尝试手写react的重要组成部分，以便更为彻底的理解其底层实现。
+**本系列文章的目标，就一个，类似于vue的学习过程，我们尝试手写react的重要组成部分，以便更为彻底的理解其底层实现。**
 涉及的内容包括：`createElement、render、cocurrent mode、fiber、render commit、reconcilliation及function components。`
 
-### 文本介绍createElement和render
+**文本介绍createElement和render**
 
-#### 1. 先看看react的使用
+### 先看看react的使用
 ```javascript
     const content = React.createElement(
         'div',
@@ -34,7 +34,7 @@ category: React系列
 <img src="/img/reactjs系列1_1.gif" alt="">
 
 
-#### 2. 了解了其所做的事情，那么接下来，我们来diy实现之
+### 了解了其所做的事情，那么接下来，我们来diy实现之
 `createElement`实现很简单，根据入参，生成一个对象并返回，这个对象我们称之为**虚拟dom**
 ```javascript
     const createTextNode = (child) => {

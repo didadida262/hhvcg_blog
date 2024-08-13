@@ -6,8 +6,6 @@ category: Webpack系列
 ---
 **本文作为一个备忘录，主要记录一些常用打包优化的方法**
 
-### webpack打包层面
-提高构建速度
 1. **productionSourceMap: false**
    禁止生成map文件
 2. **启用多线程来提高构建速度**： Teser

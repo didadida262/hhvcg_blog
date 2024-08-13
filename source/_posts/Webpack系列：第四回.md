@@ -4,8 +4,9 @@ category: Webpack系列
 date: 2023-07-25 01:12:55
 tags:
 ---
-### 以前面的先验内容为铺垫，本文将会仔细的介绍webpack的基本打包思路，最终目标，手撕一个自己的webpack。
+**以前面的先验内容为铺垫，本文将会仔细的介绍webpack的基本打包思路，最终目标，手撕一个自己的webpack。**
 
+### 前期准备
 首先再次重申一个重点：**webpack的根本目的,是为了将我们写的代码转换成浏览器能够执行的代码,并且将分散的各个模块，揉成一个统一的文件。然后直接在index.js中引入即可**
 那么我们的`mywebpack.js`的目标就是一个，从入口文件读取各个模块，生成转换后的代码，写到`bundle.js`文件，成功与否检验的标准就一个，index.html引入该bundle.js，看看浏览器能否正确显示。
 
@@ -116,9 +117,9 @@ module.exports = {
 //# sourceMappingURL=main.js.map
 
 ```
-**做的事情很简单：** 在入口文件导入helloGirl， 然后创建一个div，并将div的内容用导入的hellowgirl的内容赋值，塞入body，完成页面内容创建。之后的测试基于这三个模块文件。
-#### webpack转换代码的整体逻辑
-##### 1. 从入口文件开始，扫描文件的所有依赖，生成一个包含所有模块的ast数据的数组
+**做的事情很简单：** 在入口文件导入helloGirl， 然后创建一个div，并将helloWorldStr内容赋值div，塞入body，完成页面内容创建。之后的测试基于这三个模块文件。
+### webpack转换代码的整体逻辑
+#### 从入口文件开始，扫描文件的所有依赖，生成一个包含所有模块的ast数据的数组
 ```javascript
 // 读取config配置
 const config = require('./mywebpack.config')
@@ -250,7 +251,7 @@ var ____WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("./helloGirl.js");
 
 
 
-#### 2. 有了所有模块的ast数据和入口，借助ejs，以模板为基础，生成最终的浏览器能够看得懂的dist文件。
+#### 有了所有模块的ast数据和入口，借助ejs，以模板为基础，生成最终的浏览器能够看得懂的dist文件。
 
 ```javascript
 function generateCode(allAst, entry) {
@@ -301,7 +302,7 @@ bundle.js是一个IIFE立即执行函数。声明了几个变量和函数：
 - `__webpack_require__.o`: Object.prototype.hasOwnProperty的一个简写
 - `__webpack_require__.r`: 给模块加标记
 
-#### 开始执行：
+#### 执行逻辑
 1。 `__webpack_require__('./index.js')`从入口文件开始执行。该函数具体如下：
 
 ```javascript
@@ -363,7 +364,7 @@ __webpack_modules__[moduleId](module, module.exports, __webpack_require__);
 ```
 
 
-#### 总结
+### 总结
 1. 首先我们从入口文件出发，递归扫描，解析每一个模块文件，生成ast数据。
 2. 借助babel/parser将字符串代码转换成ast，同时借助traverse，根据我们的需求，改写每一个浏览器不支持的写法，如import等
 3. 有了ast数据和入口参数两份数据，借助ejs和固定模板，将两者插入模板中，生成最终的整合文件。

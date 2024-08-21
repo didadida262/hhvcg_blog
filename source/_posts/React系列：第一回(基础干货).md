@@ -486,6 +486,22 @@ useLayoutEffect是在所有dom变更之后`同步调用`。重点就在于这个
 
   ```
 
+`useAsyncFn`
+通常处理异步请求函数
+```javascript
+  const [loading, test] = useAsyncFn(async () => {
+    const p = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve("1");
+      }, 3000);
+    });
+    p.then(res => {
+      console.log("res>>", res);
+    });
+  }, []);
+```
+
+
 注： 本文大量参考平台内部某同学的文章，请留意。
 **文毕**
 

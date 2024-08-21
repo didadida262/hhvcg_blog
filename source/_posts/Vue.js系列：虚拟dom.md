@@ -37,5 +37,5 @@ const vnode = {
 ...
 ...
 ```
-vnode就是一个类，这个类拥有比如tag、text、children等属性来描述实例化的vnode。仅此而已。
+vnode就是一个数据结构（对象），这个对象通过`tag、text、children`等属性来描述实例化的vnode。仅此而已。
 至此我们明白了虚拟DOM和真实DOM之间的映射关系，完成了第一步.下面将会介绍重点中的重点: **找出变化的patch过程**。

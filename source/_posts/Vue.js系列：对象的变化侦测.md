@@ -34,7 +34,7 @@ definePropertyReactive(obj, 'name', val)
 obj.name = 'asdasd'
 // obj.name = 'asdasdasd'
 ```
-我们给defineProperty的外层包了一层definePropertyReactive，用来存储val。对于任何一个对象，都可以用defineProperty来定义get和set。当我们读取某个对象的某个属性值时会触发get。改变该值的时候就会触发set。因此，为了实现响应式，需要做到“**在get中搜集依赖，在set中通知依赖**”。
+我们给defineProperty的外层包了一层definePropertyReactive，用来存储val。对于任何一个对象，都可以用defineProperty来定义get和set。当我们读取某个对象的某个属性值时会触发get。改变该值的时候就会触发set。因此，为了实现响应式，本质就是“**在get中搜集依赖，在set中通知依赖**”。
 
 上面所说的依赖有点抽象，实质就是使用了该值的地方，比如某个组件，某个watch监听。这些依赖，我们可以简单地用一个数组来存储，于是有了下面的版本：
 ```javascript
@@ -59,7 +59,7 @@ const definePropertyReactive = (obj, key, val) => {
   })
 }
 ```
-当然，vue2的实现，并不是简单的如上面所示的用个数组去存储所有的依赖，然后遍历通知(notify)。实际上在这中间加了一层watcher中转站。**就是由watcher搜集变化，然后挨个通知所有的依赖**。
+当然，vue2的实现，并不是简单的如上面所示的用个数组去存储所有的依赖，然后遍历通知(notify)。实际上在这中间加了一层watcher中转层。**就是由watcher搜集变化，然后挨个通知所有的依赖**。
 
 我想稍微懂点设计模式的同学已经看出来，这里的实现，实际上就是一个典型的发布订阅模式。
 好了，我们目前为止，只是实现了对象的某个属性的响应式，下面要做的很显然，就是将对象的所有属性变成响应式的。方法很清晰：遍历执行上述操作。如下代码所示：

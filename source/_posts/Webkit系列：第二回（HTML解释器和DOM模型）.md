@@ -1,8 +1,7 @@
 ---
-title: Webkit系列：HTML解释器和DOM模型
+title: Webkit系列：第二回（HTML解释器和DOM模型）
+date: 2024-09-04 10:45:20
 category: Webkit系列
-date: 2023-08-23 23:32:28
-tags:
 ---
 
 ### 本文将尽可能的解释Webkit的HTML解释器流程及Dom模型相关的知识点

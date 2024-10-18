@@ -9,7 +9,7 @@ category: Paperjs专栏
 在paperjs的坐标体系中，默认方向为`右正下正`，没记错的话，应该是同opencv一致。我们通常见到的`右正上正`的坐标系，是标准的`笛卡尔坐标系`。这是一点区别。
 那么如果现在我们要做一件事情，**就是将paperjs的坐标系转换成标准笛卡尔坐标系，该如何实现呢？即使实现，对那些事件点击的操作有什么影响呢**
 
-### 1. 首先我们老样子初始化那一套，然后把标准的缩放拖拽操作`随意`的加上，同时`随意`的加上图片、文本等：
+#### 首先我们老样子初始化那一套，然后把标准的缩放拖拽操作`随意`的加上，同时`随意`的加上图片、文本等：
 <img src="/img/paperjs坐标1.png" alt="">
 
 图片、文本和矩形框位置信息如下：
@@ -20,7 +20,7 @@ category: Paperjs专栏
 ```
 从坐标数据结合实际效果看出，这确实是标准的`右正下正`结构。
 
-### 2. 在1的基础之上，我们借助matrix，将坐标系变更为标准的笛卡尔坐标系。
+### 在上面的基础之上，我们借助matrix，将坐标系变更为标准的笛卡尔坐标系。
 `关键代码`:
 ```javascript
     this.project.view.matrix = new paper.Matrix().scale(1, -1)
@@ -48,7 +48,7 @@ export const setProjectZoom = (pro, zoom) => {
 ```
 **先复位，后赋值期望的zoom**
 
-### 文本图片内容发生了镜像变化，如何处理？
+#### 文本图片内容发生了镜像变化，如何处理？
 - 针对文本。
 ```javascript
 export const modifyDirection = (path: any) => {
@@ -92,5 +92,10 @@ export const modifyDirectionPic = (raster: any) => {
 最终效果：
 
 <img src="/img/paperjs坐标4.png" alt="">
+
+
+#### 插个坑-设备像素比
+在用paperjs开发时，基本操作挂载设置中点。这个过程有个细节：`devicePixelRatio`.我们需要手动将这个值设置为1，否则就会出问题，这里只介绍为什么。devicePixelRatio决定了我们呢写的像素值，在屏幕上画出来的时候，到底是多大。通常情况下为1，但有些设备比如我的mac，他是2，也就是说，当我想要换一个半径10px的圆，实际要x2...
+
 
 **文over**

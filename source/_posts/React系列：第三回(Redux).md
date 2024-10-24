@@ -94,61 +94,116 @@ const HomeComponent = () => {
 
 ```javascript
 // 异步请求
+// store/counterSlice.js
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { getInfo } from "@/server/testpageAPI";
 
-import { createSlice } from "@reduxjs/toolkit";
-import axios from 'axios';
+export const fetchCounterAsync: any = createAsyncThunk(
+  "counter/fetchCounter",
+  async () => {
+    const response = await getInfo();
+    return await response;
+  }
+);
 
-const channelStore = createSlice({
-    name: 'counterAsync',
-    initialState: {
-        channelList: []
+const counterSlice = createSlice({
+  name: "counter",
+  initialState: {
+    value: 0,
+    status: "idle"
+  },
+  reducers: {
+    increment: (state, action) => {
+      state.value = action.payload; // 同步操作
     },
-    reducers: {
-        setChannelList(state, action) {
-            state.channelList = action.payload;
-        }
+    decrement: (state, action) => {
+      state.value = action.payload; // 同步操作
     }
-})
+  },
+  extraReducers: builder => {
+    builder
+      .addCase(fetchCounterAsync.pending, state => {
+        state.status = "loading";
+      })
+      .addCase(fetchCounterAsync.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.value = action.payload.data.word;
+      })
+      .addCase(fetchCounterAsync.rejected, state => {
+        state.status = "failed";
+      });
+  }
+});
 
-const reducer = channelStore.reducer
-const { setChannelList } = channelStore.actions
+export const { increment, decrement } = counterSlice.actions;
+export default counterSlice.reducer;
 
-const fetchData = () => {
-    return async (dispatch) => {
-      const response = await axios.get('/api/v1/dataSource');
-      const data = response.data.result
-      console.log('data>>>', data)
-      dispatch(setChannelList(data.users))
-    }
-}
 
-export { fetchData }
-export default reducer
-
-// store添加配置
+// store/index文件
 import { configureStore } from "@reduxjs/toolkit";
-import counterReducer from './mouduls/counterStoreA'
-import channelReducer from './mouduls/counterStoreB'
 
-const store = configureStore({
-    reducer: {
-        counter: counterReducer,
-        channel: channelReducer
-    }
-})
+import counterReducer from "./counterSlice";
 
-export default store
+export const store = configureStore({
+  reducer: {
+    counter: counterReducer
+  }
+});
+
 
 // 组件中使用
-  const { channelList } = useSelector((state: any) => state.channel)
-  const dispatch = useDispatch()
+export const SiderComponent = () => {
+  const dispatch = useDispatch();
+  const counter = useSelector((state: any) => state.counter.value);
+  const status = useSelector((state: any) => state.counter.status);
+  return (
+    <div className="w-full h-full ">
+      <div className="w-full">
+        {counter}
+      </div>
+      <div className="w-full">
+        {status}
+      </div>
+      <ButtonCommon
+        className="w-full"
+        type={EButtonType.SIMPLE}
+        onClick={() => {
+          const newVal = counter + 1;
+          console.warn("increment>>>");
 
-  useEffect(() => {
-    dispatch(fetchData() as any)
-    console.log('..........')
-    console.log('channelList>>>', channelList)
-  }, [])
-  console.log('count:', count)
+          console.log("counter>>>", counter);
+          console.log("newVal>>>", newVal);
+          dispatch(increment(newVal));
+        }}
+      >
+        <span className="">+</span>
+      </ButtonCommon>
+      <ButtonCommon
+        className="w-full"
+        type={EButtonType.SIMPLE}
+        onClick={() => {
+          const newVal = counter - 1;
+          console.warn("decrement>>>");
+          console.log("counter>>>", counter);
+          console.log("newVal>>>", newVal);
+          dispatch(decrement(newVal));
+        }}
+      >
+        <span className="">-</span>
+      </ButtonCommon>
+      <ButtonCommon
+        className="w-full"
+        type={EButtonType.SIMPLE}
+        onClick={() => {
+          dispatch(fetchCounterAsync());
+        }}
+      >
+        <span className="">异步</span>
+      </ButtonCommon>
+    </div>
+  );
+};
+
 
 ```
 

@@ -169,10 +169,6 @@ export const SiderComponent = () => {
         type={EButtonType.SIMPLE}
         onClick={() => {
           const newVal = counter + 1;
-          console.warn("increment>>>");
-
-          console.log("counter>>>", counter);
-          console.log("newVal>>>", newVal);
           dispatch(increment(newVal));
         }}
       >
@@ -183,9 +179,6 @@ export const SiderComponent = () => {
         type={EButtonType.SIMPLE}
         onClick={() => {
           const newVal = counter - 1;
-          console.warn("decrement>>>");
-          console.log("counter>>>", counter);
-          console.log("newVal>>>", newVal);
           dispatch(decrement(newVal));
         }}
       >

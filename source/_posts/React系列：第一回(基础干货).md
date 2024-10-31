@@ -463,6 +463,8 @@ export default AboutComponent
 ```
 配合memo使用
 
+`总结一下`：usecallback、useMemo，useCallback主要用于避免在每次渲染时都重新创建函数，而useMemo用于避免在每次渲染时都进行复杂的计算和重新创建对象。useCallback返回一个函数，当依赖项改变时才会更新；而useMemo返回一个值，用于缓存计算结果，减少重复计算。
+
 `useLayoutEffect`
 同useEffect几乎一摸一样，但稍有些区别。官方建议： 大多数场景下直接使用`useEffect`，但代码引起页面闪烁就推荐使用`useLayoutEffect`处理。即：直接操作dom样式相关的使用后者。
 useLayoutEffect是在所有dom变更之后`同步调用`。重点就在于这个同步，大量变动会引起阻塞，建议优先useEffect。

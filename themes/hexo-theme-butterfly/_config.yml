@@ -178,7 +178,7 @@ post_edit:
   enable: false
   # url: https://github.com/user-name/repo-name/edit/branch-name/subdirectory-name/
   # For example: https://github.com/jerryc127/butterfly.js.org/edit/main/source/
-  url:
+  url: https://hhvcg-blog.vercel.app/
 
 # Related Articles
 related_post:

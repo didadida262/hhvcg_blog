@@ -1,0 +1,9 @@
+{
+  "redirects": [
+    {
+      "source": "/:slug/",
+      "destination": "/:slug/index.html",
+      "permanent": true
+    }
+  ]
+}
